@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Murch Solar — GC Delivery vs. Production S-Curves | Jun 22, 2026</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-annotation/3.0.1/chartjs-plugin-annotation.min.js"></script>
+<style>
+/* ── Color palette ────────────────────────────────────────── */
+:root {
+  /* Brand */
+  --green:#168a5b; --green-dark:#0c5f43; --green-light:#e8f4ef;
+  --paper:#f7f9f5; --line:#dbe3de; --text:#1a1f1c; --muted:#5a6b62;
+  --red:#b53030;
+
+  /* DELIVERY family — warm amber/orange */
+  --del-bl:#92400e;      /* dark burnt-amber  – BL dashed     */
+  --del-l1:#d97706;      /* amber             – Lot 1 actual  */
+  --del-l2:#f97316;      /* orange            – Lot 2 planned */
+  --del-bg:#fffbeb;      /* light amber fill                  */
+
+  /* INSTALLATION family — cool blue/violet */
+  --ins-bl:#1e3a5f;      /* dark navy         – BL dashed     */
+  --ins-l1:#2563eb;      /* bright blue       – plan Lot 1    */
+  --ins-l2:#7c3aed;      /* violet            – plan Lot 2    */
+  --ins-req:#dc2626;     /* red               – required rate */
+  --ins-dot:#16a34a;     /* green             – actual marker */
+  --ins-bg:#eff6ff;      /* light blue fill                   */
+}
+
+/* ── Reset ────────────────────────────────────────────────── */
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter','Segoe UI',system-ui,sans-serif;background:var(--paper);color:var(--text);font-size:13px}
+
+/* ── Header ──────────────────────────────────────────────── */
+.header{background:var(--green-dark);color:#fff;padding:16px 32px;
+  display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.header-left{display:flex;align-items:center;gap:14px}
+.logo{width:44px;height:44px;background:var(--green);border-radius:9px;
+  display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:800;flex-shrink:0}
+.header h1{font-size:16px;font-weight:700;line-height:1.3}
+.header h1 span{display:block;font-size:11px;font-weight:400;opacity:.75;margin-top:2px}
+.header-right{text-align:right;font-size:11px;opacity:.82}
+.header-right strong{display:block;font-size:13px;font-weight:600;opacity:1}
+
+/* ── Banners ─────────────────────────────────────────────── */
+.alert{background:#7a1b1b;color:#fff;padding:8px 32px;font-size:11.5px;
+  display:flex;align-items:flex-start;gap:10px}
+.alert .bdg{background:var(--red);border-radius:3px;padding:2px 8px;
+  font-weight:700;font-size:10px;white-space:nowrap;flex-shrink:0;margin-top:1px}
+.root-cause{background:#4a1f00;color:#fde8cc;padding:8px 32px;font-size:11.5px;
+  display:flex;align-items:flex-start;gap:10px}
+.root-cause .bdg{background:#b54a00;border-radius:3px;padding:2px 8px;
+  font-weight:700;font-size:10px;white-space:nowrap;flex-shrink:0;margin-top:1px}
+
+/* ── Layout ───────────────────────────────────────────────── */
+.container{max-width:1440px;margin:0 auto;padding:20px 32px;
+  display:flex;flex-direction:column;gap:22px}
+.section-title{font-size:10px;font-weight:700;text-transform:uppercase;
+  letter-spacing:.08em;color:var(--muted);margin-bottom:14px;
+  display:flex;align-items:center;gap:8px}
+.section-title::after{content:'';flex:1;height:1px;background:var(--line)}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:700px){.two-col{grid-template-columns:1fr}}
+
+/* ── Chart card — full-width stacked ─────────────────────── */
+.chart-card{background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.cch{padding:16px 22px 12px;border-bottom:1px solid var(--line);
+  display:flex;align-items:flex-start;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.cch-left h3{font-size:15px;font-weight:700;margin-bottom:4px}
+.cch-left h3 span{display:block;font-size:11px;font-weight:400;color:var(--muted);margin-top:3px;line-height:1.45}
+.tags{display:flex;gap:5px;flex-wrap:wrap;margin-top:8px}
+.tag{font-size:10px;font-weight:700;padding:3px 9px;border-radius:10px;white-space:nowrap}
+
+/* Delivery tags = warm amber */
+.td{background:#fef3c7;color:#92400e;border:1px solid #fcd34d}
+/* Installation tags = cool blue */
+.ti{background:#eff6ff;color:#1e40af;border:1px solid #bfdbfe}
+/* Warning / grey */
+.tw{background:#fff7ed;color:#c2410c;border:1px solid #fed7aa}
+.tg{background:#f3f4f6;color:var(--muted);border:1px solid #d1d5db}
+
+/* Color key strip in card header */
+.color-key{display:flex;flex-direction:column;gap:6px;flex-shrink:0;
+  background:var(--paper);border:1px solid var(--line);border-radius:8px;
+  padding:10px 14px;min-width:220px}
+.ck-title{font-size:9px;font-weight:700;text-transform:uppercase;
+  letter-spacing:.07em;color:var(--muted);margin-bottom:4px}
+.ck-group{display:flex;flex-direction:column;gap:4px}
+.ck-row{display:flex;align-items:center;gap:7px;font-size:10px;color:var(--text)}
+.ck-swatch{width:28px;height:4px;border-radius:2px;flex-shrink:0}
+.ck-dashed{width:28px;height:0;border-top:2.5px dashed currentColor;flex-shrink:0}
+.ck-sep{height:1px;background:var(--line);margin:3px 0}
+
+/* ── Chart canvas ─────────────────────────────────────────── */
+.chart-wrap{padding:14px 16px 6px;height:420px;position:relative}
+
+/* ── Stats bar ────────────────────────────────────────────── */
+.stats-bar{display:flex;border-top:1px solid var(--line)}
+.stat{flex:1;padding:10px 12px;border-right:1px solid var(--line);text-align:center}
+.stat:last-child{border-right:none}
+.slabel{font-size:9px;text-transform:uppercase;letter-spacing:.05em;
+  color:var(--muted);font-weight:700;margin-bottom:4px}
+.sval{font-size:17px;font-weight:700;line-height:1}
+.ssub{font-size:9px;color:var(--muted);margin-top:3px;line-height:1.3}
+/* Value colors */
+.vg{color:var(--green)} .va{color:#d97706} .vr{color:var(--red)}
+.vb{color:#2563eb} .vv{color:#7c3aed} .vm{color:var(--muted)}
+.vo{color:#f97316}
+
+/* ── Bottom note ──────────────────────────────────────────── */
+.note-box{font-size:11px;color:var(--muted);padding:6px 2px;line-height:1.6}
+
+/* ── Milestone tables ─────────────────────────────────────── */
+.tbl-card{background:#fff;border:1px solid var(--line);border-radius:8px;overflow:hidden}
+table{width:100%;border-collapse:collapse;font-size:11px}
+thead tr{background:var(--green-dark);color:#fff}
+thead.tr-dark tr{background:#163c35}
+th{padding:8px 12px;text-align:left;font-size:10px;font-weight:700}
+td{padding:7px 12px;border-bottom:1px solid var(--line);vertical-align:middle}
+tr:last-child td{border-bottom:none}
+.bdr{display:inline-block;padding:2px 8px;border-radius:3px;
+  font-size:9px;font-weight:700;color:#fff}
+.bdr-r{background:var(--red)} .bdr-a{background:#d97706}
+.bdr-b{background:#2563eb}    .bdr-g{background:var(--green)}
+
+.footer{text-align:center;font-size:10px;color:var(--muted);
+  padding:14px 0 10px;border-top:1px solid var(--line);margin-top:4px}
+</style>
+</head>
+<body>
+
+<!-- ── HEADER ─────────────────────────────────────────────── -->
+<div class="header">
+  <div class="header-left">
+    <div class="logo">G</div>
+    <h1>Murch Solar — GameChange Delivery vs. Production
+      <span>Cumulative material received on site (warm) vs. cumulative units installed (cool) — 3 critical-path materials</span>
+    </h1>
+  </div>
+  <div class="header-right">
+    <strong>Murch Solar — 96.8 MWdc</strong>
+    Van Buren County, MI &nbsp;|&nbsp; Jun 22, 2026
+  </div>
+</div>
+
+<!-- ── HOW TO READ ────────────────────────────────────────── -->
+<div class="alert">
+  <span class="bdg">HOW TO READ</span>
+  <span>
+    <strong style="color:#fcd34d">Warm colors (amber / orange)</strong> = GameChange material delivery — cumulative units received on site. &nbsp;
+    <strong style="color:#a5b4fc">Cool colors (blue / violet)</strong> = Production installation — cumulative units physically installed. &nbsp;
+    When the <strong style="color:#fff">warm line sits above the cool line</strong>, material is buffered ahead of crews — healthy.
+    When the <strong style="color:#fca5a5">warm line is flat or absent</strong>, installation is blocked by missing supply.
+  </span>
+</div>
+
+<!-- ── ROOT CAUSE ─────────────────────────────────────────── -->
+<div class="root-cause">
+  <span class="bdg">ROOT CAUSE</span>
+  <span>
+    GC Lot 1 delivered posts, torque tubes, bearings &amp; dampers — but <strong style="color:#ffcc99">zero usable purlins</strong>.
+    Without purlins, tracker rows cannot be completed and modules cannot be mounted.
+    All 186,585 usable purlins arrive in a single 2nd batch (Jun 17→Jul 16), +25 CD past the committed date.
+    Chart ② below shows this failure most clearly: both delivery and installation flat-line at zero from Apr 20 to Jun 16.
+  </span>
+</div>
+
+<!-- ── MAIN CONTENT ───────────────────────────────────────── -->
+<div class="container">
+<div>
+<div class="section-title">GameChange Material Delivery vs. Cumulative Installation — 3 Critical-Path Materials</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     CHART 1 · POSTS (GC) vs PILE INSTALLATION
+════════════════════════════════════════════════════════════ -->
+<div class="chart-card" style="margin-bottom:20px">
+  <div class="cch">
+    <div class="cch-left">
+      <h3>① Posts — 31,352 units &nbsp;·&nbsp; Pile Installation
+        <span>GC committed Mar 30–Jun 21 (single phase, 83 CD). Actual: Lot 1 complete May 28 · 21-CD gap · Lot 2 begins Jun 18.
+          Installation tracking delivery closely — both at ~50% today.</span>
+      </h3>
+      <div class="tags">
+        <span class="tag td">📦 Delivered Lot 1: 15,751 posts (complete)</span>
+        <span class="tag tw">📦 Lot 2 planned: 15,896 · Jun 18 → Jul 17</span>
+        <span class="tag ti">🔩 Installed Jun 22: 15,707 piles (50.1%)</span>
+      </div>
+    </div>
+    <div class="color-key">
+      <div class="ck-title">📦 Delivery — warm colors</div>
+      <div class="ck-group">
+        <div class="ck-row"><span class="ck-dashed" style="color:#92400e"></span>GC BL commitment</div>
+        <div class="ck-row"><span class="ck-swatch" style="background:#d97706"></span>Lot 1 actual (delivered)</div>
+        <div class="ck-row"><span class="ck-swatch" style="background:#f97316"></span>Lot 2 planned</div>
+      </div>
+      <div class="ck-sep"></div>
+      <div class="ck-title">🔩 Installation — cool colors</div>
+      <div class="ck-group">
+        <div class="ck-row"><span class="ck-dashed" style="color:#1e3a5f"></span>Contract baseline</div>
+        <div class="ck-row"><span class="ck-swatch" style="background:linear-gradient(to right,#2563eb 50%,#7c3aed 50%)"></span>Current plan (Lot 1→2)</div>
+        <div class="ck-row"><span class="ck-dashed" style="color:#dc2626"></span>Required rate</div>
+        <div class="ck-row"><span style="color:#16a34a;font-size:13px;line-height:1">▲</span>&nbsp;Actual Jun 22</div>
+      </div>
+    </div>
+  </div>
+  <div class="chart-wrap"><canvas id="cPosts"></canvas></div>
+  <div class="stats-bar">
+    <div class="stat"><div class="slabel">GC BL Finish</div><div class="sval vg">Jun 21</div><div class="ssub">Original commitment</div></div>
+    <div class="stat"><div class="slabel">Delivery Gap</div><div class="sval vr">21 CD</div><div class="ssub">May 28 → Jun 18 · no posts</div></div>
+    <div class="stat"><div class="slabel">Installed Jun 22</div><div class="sval va">15,707</div><div class="ssub">50.1% of 31,352</div></div>
+    <div class="stat"><div class="slabel">Lot 2 Delivery End</div><div class="sval vo">Jul 17</div><div class="ssub">Planned · +26 CD vs BL</div></div>
+    <div class="stat"><div class="slabel">Install Forecast</div><div class="sval vr">Jul 28</div><div class="ssub">BL: Jun 8 · −50 CD slip</div></div>
+    <div class="stat"><div class="slabel">Required Rate</div><div class="sval vb">~580/WD</div><div class="ssub">27 WD remaining · 1.42× BL</div></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     CHART 2 · PURLINS (GC) vs PURLIN INSTALLATION
+════════════════════════════════════════════════════════════ -->
+<div class="chart-card" style="margin-bottom:20px">
+  <div class="cch">
+    <div class="cch-left">
+      <h3>② Purlins / Correas — 186,585 usable units &nbsp;·&nbsp; Tracker Completion Gate
+        <span>GC committed Apr 20–Jun 21. First delivery (Apr 23, ~19.9K) non-conforming — wrong module dimensions, excluded.
+          Zero usable purlins on site until Jun 17. This is the single root-cause chart: without purlins,
+          tracker rows cannot close and modules cannot follow.</span>
+      </h3>
+      <div class="tags">
+        <span class="tag tg">⚠ 19,894 rcvd Apr 23 — non-conforming (excluded)</span>
+        <span class="tag tw">📦 All usable: 186,585 · Jun 17 → Jul 16 (+25 CD)</span>
+        <span class="tag ti">🔩 Installed: 0 — blocked until delivery begins</span>
+      </div>
+    </div>
+    <div class="color-key">
+      <div class="ck-title">📦 Delivery — warm colors</div>
+      <div class="ck-group">
+        <div class="ck-row"><span class="ck-dashed" style="color:#92400e"></span>GC BL commitment</div>
+        <div class="ck-row"><span class="ck-swatch" style="background:#9ca3af"></span>Non-conforming (excl.)</div>
+        <div class="ck-row"><span class="ck-swatch" style="background:#f97316"></span>2nd batch planned (usable)</div>
+      </div>
+      <div class="ck-sep"></div>
+      <div class="ck-title">🔩 Installation — cool colors</div>
+      <div class="ck-group">
+        <div class="ck-row"><span class="ck-dashed" style="color:#1e3a5f"></span>Contract baseline</div>
+        <div class="ck-row"><span class="ck-swatch" style="background:linear-gradient(to right,#2563eb 50%,#7c3aed 50%)"></span>Current plan (Lot 1→2)</div>
+        <div class="ck-row"><span class="ck-dashed" style="color:#dc2626"></span>Required rate</div>
+      </div>
+    </div>
+  </div>
+  <div class="chart-wrap"><canvas id="cPurlins"></canvas></div>
+  <div class="stats-bar">
+    <div class="stat"><div class="slabel">GC BL Finish</div><div class="sval vg">Jun 21</div><div class="ssub">Original commitment</div></div>
+    <div class="stat"><div class="slabel">Usable On Site</div><div class="sval vr">0</div><div class="ssub">Non-conforming Lot 1 excluded</div></div>
+    <div class="stat"><div class="slabel">2nd Batch Total</div><div class="sval vo">186,585</div><div class="ssub">Jun 17 → Jul 16 · planned</div></div>
+    <div class="stat"><div class="slabel">vs BL Finish</div><div class="sval vr">+25 CD</div><div class="ssub">Jul 16 vs Jun 21 committed</div></div>
+    <div class="stat"><div class="slabel">Install Forecast</div><div class="sval vr">Sep 18</div><div class="ssub">BL: Jul 14 · −66 CD slip</div></div>
+    <div class="stat"><div class="slabel">Required Rate</div><div class="sval vb">~2,500/WD</div><div class="ssub">After delivery · tight but achievable</div></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     CHART 3 · TORQUE TUBES (left Y) + TRACKER ASSEMBLY (right Y)
+════════════════════════════════════════════════════════════ -->
+<div class="chart-card" style="margin-bottom:20px">
+  <div class="cch">
+    <div class="cch-left">
+      <h3>③ Torque Tubes — 29,056 units (left axis) &nbsp;·&nbsp; Tracker Assembly — 2,486 rows (right axis)
+        <span>Tubes arrived on schedule (Lot 1 complete May 29 — 46.2%). Despite having tubes on site for weeks,
+          tracker assembly is stuck at 107 rows (4.3%). Root cause: tubes alone are insufficient — each row
+          requires purlins to lock the tracker in place. Dual Y-axis: amber/orange = tubes (left); blue/violet = tracker rows (right).</span>
+      </h3>
+      <div class="tags">
+        <span class="tag td">📦 Tubes Lot 1: 13,424 delivered (46.2%)</span>
+        <span class="tag tw">📦 Lot 2 planned: 15,632 · Jun 16 → Jul 17</span>
+        <span class="tag ti">🔩 Tracker rows Jun 16: 107 installed (4.3%)</span>
+        <span class="tag tg">⚠ Gap = purlins missing — rows cannot close</span>
+      </div>
+    </div>
+    <div class="color-key">
+      <div class="ck-title">📦 Tubes — warm (LEFT axis)</div>
+      <div class="ck-group">
+        <div class="ck-row"><span class="ck-dashed" style="color:#92400e"></span>GC BL commitment</div>
+        <div class="ck-row"><span class="ck-swatch" style="background:#d97706"></span>Lot 1 actual (delivered)</div>
+        <div class="ck-row"><span class="ck-swatch" style="background:#f97316"></span>Lot 2 planned</div>
+      </div>
+      <div class="ck-sep"></div>
+      <div class="ck-title">🔩 Tracker rows — cool (RIGHT axis)</div>
+      <div class="ck-group">
+        <div class="ck-row"><span class="ck-dashed" style="color:#1e3a5f"></span>Contract baseline</div>
+        <div class="ck-row"><span class="ck-swatch" style="background:linear-gradient(to right,#2563eb 50%,#7c3aed 50%)"></span>Current plan (Lot 1→2)</div>
+        <div class="ck-row"><span class="ck-dashed" style="color:#dc2626"></span>Required rate</div>
+        <div class="ck-row"><span style="color:#16a34a;font-size:13px;line-height:1">▲</span>&nbsp;Actual Jun 16 (107 rows)</div>
+      </div>
+    </div>
+  </div>
+  <div class="chart-wrap"><canvas id="cTubes"></canvas></div>
+  <div class="stats-bar">
+    <div class="stat"><div class="slabel">Tubes Delivered</div><div class="sval va">13,424</div><div class="ssub">Lot 1 · 46.2% of 29,056</div></div>
+    <div class="stat"><div class="slabel">Tube Gap</div><div class="sval va">17 CD</div><div class="ssub">May 29 → Jun 16 · no tubes</div></div>
+    <div class="stat"><div class="slabel">Trackers Installed</div><div class="sval vr">107 rows</div><div class="ssub">Jun 16 · 4.3% · Area A only</div></div>
+    <div class="stat"><div class="slabel">Tracker Forecast</div><div class="sval vr">Aug 19</div><div class="ssub">BL: Jul 14 · −36 CD slip</div></div>
+    <div class="stat"><div class="slabel">Blocker</div><div class="sval vr">Purlins</div><div class="ssub">Required to complete each row</div></div>
+    <div class="stat"><div class="slabel">Required Rate</div><div class="sval vb">~47/WD</div><div class="ssub">rows · after purlins arrive</div></div>
+  </div>
+</div>
+
+</div><!-- /chart block -->
+
+<!-- ── KEY INSIGHT NOTE ────────────────────────────────────── -->
+<p class="note-box">
+  <strong style="color:var(--red)">Reading the three charts together:</strong>
+  Chart ① shows posts arrived and were installed in close sequence — the warm and cool lines track each other.
+  Chart ② is the most critical: the warm (delivery) line stays flat at zero from Apr 20 to Jun 16 — a complete failure of the BL commitment.
+  Chart ③ shows that even with tubes on site (warm line rising Apr–May), the cool (installation) line barely moves —
+  confirming that tubes are necessary but not sufficient. Each tracker row needs purlins to close.
+  The gap between the warm and cool lines in charts ② and ③ is the project delay, measured in calendar days.
+</p>
+
+<!-- ── MILESTONES & RECOVERY GATES ───────────────────────── -->
+<div>
+  <div class="section-title">Project Milestones — Contract vs. Current Forecast · COD Recovery Gates</div>
+  <div class="two-col">
+
+    <div class="tbl-card">
+      <table>
+        <thead><tr>
+          <th>Milestone</th><th>Contract Target</th><th>Current Forecast</th><th>Status</th>
+        </tr></thead>
+        <tbody>
+          <tr>
+            <td><strong>Mechanical Completion</strong></td>
+            <td>Sep 25, 2026</td>
+            <td style="color:var(--red);font-weight:700">Oct 10–15 provisional</td>
+            <td><span class="bdr bdr-r">CRITICAL</span></td>
+          </tr>
+          <tr>
+            <td><strong>Provisional Interconnection (PIS)</strong></td>
+            <td>Oct 16, 2026</td>
+            <td style="color:var(--red);font-weight:700">Oct 20–25, 2026</td>
+            <td><span class="bdr bdr-r">CRITICAL</span></td>
+          </tr>
+          <tr>
+            <td><strong>Commercial Operation Date (COD)</strong></td>
+            <td>Nov 9, 2026</td>
+            <td style="color:#d97706;font-weight:700">Nov 5–9, 2026</td>
+            <td><span class="bdr bdr-a">HIGH RISK</span></td>
+          </tr>
+          <tr>
+            <td><strong>Substantial Completion</strong></td>
+            <td>Nov 30, 2026</td>
+            <td style="color:var(--green);font-weight:700">Nov 30, 2026</td>
+            <td><span class="bdr bdr-b">WATCH</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tbl-card">
+      <table>
+        <thead class="tr-dark"><tr>
+          <th>COD Recovery Gate</th><th>Required Date</th><th style="text-align:right">Required Rate</th>
+        </tr></thead>
+        <tbody>
+          <tr>
+            <td><strong>All piles installed &amp; QC accepted</strong></td>
+            <td style="color:var(--red);font-weight:700">Jul 27–28, 2026</td>
+            <td style="text-align:right">560/day · 7 machines × 80</td>
+          </tr>
+          <tr>
+            <td><strong>Tracker structure + full purlins complete</strong></td>
+            <td style="color:var(--red);font-weight:700">Sep 18, 2026</td>
+            <td style="text-align:right">≥40 rows/day · ≥2,500 purlins/day</td>
+          </tr>
+          <tr>
+            <td><strong>All modules installed</strong></td>
+            <td style="color:var(--red);font-weight:700">Oct 9, 2026</td>
+            <td style="text-align:right">≥3,000 modules/day</td>
+          </tr>
+          <tr>
+            <td><strong>DC completion, testing &amp; punch</strong></td>
+            <td style="color:#d97706;font-weight:700">Nov 6, 2026</td>
+            <td style="text-align:right">Follow modules by block</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+</div>
+
+<div class="footer">
+  Murch Solar — 96.8 MWdc &nbsp;|&nbsp; Van Buren County, MI &nbsp;|&nbsp; EPC: Greensol Energy &nbsp;|&nbsp;
+  Dashboard prepared: Jun 22, 2026 &nbsp;|&nbsp;
+  Source: CM Delivery/Mechanical workbook Jun 22 · GameChange delivery plan Jun 15 · Murch Project Dashboard Jun 22
+</div>
+
+</div><!-- /container -->
+
+<!-- ═══════════════════════════════════════════════════════════
+     JAVASCRIPT
+════════════════════════════════════════════════════════════ -->
+<script>
+'use strict';
+
+// ── Date utilities ────────────────────────────────────────────
+const JAN1 = new Date(2026, 0, 1);
+function dayOf(m, d) { return Math.round((new Date(2026, m-1, d) - JAN1) / 86400000); }
+
+const labels = [], dayOff = [];
+let cur = new Date(JAN1);
+while (cur <= new Date(2026, 10, 15)) {
+  labels.push(cur.toLocaleDateString('en-US', { month:'short', day:'numeric' }));
+  dayOff.push(Math.round((cur - JAN1) / 86400000));
+  cur.setDate(cur.getDate() + 7);
+}
+const TODAY    = dayOf(6, 22);
+const todayIdx = dayOff.findIndex(d => d >= TODAY);
+
+// ── Core S-curve / line builders ──────────────────────────────
+function sv(day, s, e, tot) {
+  if (day < s) return 0;
+  if (day >= e) return tot;
+  const mid = (s + e) / 2, k = 12 / (e - s);
+  const L = x => 1 / (1 + Math.exp(-k * (x - mid)));
+  return Math.round(((L(day) - L(s)) / (L(e) - L(s))) * tot);
+}
+function blArr(s, e, tot) {
+  return dayOff.map(d => (d < s || d > e) ? null : sv(d, s, e, tot));
+}
+function curArr(l1s, l1e, l1t, l2s, l2e, l2t) {
+  const last = Math.max(l1e, l2e);
+  return dayOff.map(d => (d < l1s || d > last) ? null
+    : sv(d, l1s, l1e, l1t) + sv(d, l2s, l2e, l2t));
+}
+function reqArr(fd, fv, td, tv) {
+  return dayOff.map(d => (d < fd || d > td) ? null
+    : Math.round(fv + (tv - fv) * (d - fd) / (td - fd)));
+}
+function delivArr(pts) {
+  if (!pts || !pts.length) return dayOff.map(() => null);
+  return dayOff.map(d => {
+    if (d < pts[0][0] || d > pts[pts.length-1][0]) return null;
+    let v = pts[0][1];
+    for (const [pd, pv] of pts) { if (d >= pd) v = pv; else break; }
+    return v;
+  });
+}
+function dotArr(val) {
+  return dayOff.map((_, i) => i === todayIdx ? val : null);
+}
+function lot2Idx(day) { return dayOff.findIndex(d => d >= day); }
+function segColor(l2i) { return ctx => ctx.p0DataIndex < l2i ? '#2563eb' : '#7c3aed'; }
+
+Chart.defaults.font.family = "'Inter','Segoe UI',system-ui,sans-serif";
+Chart.defaults.font.size   = 10;
+
+// ── Shared annotations ────────────────────────────────────────
+function annoToday() {
+  return { type:'line', xMin:todayIdx, xMax:todayIdx,
+    borderColor:'rgba(220,38,38,.65)', borderWidth:1.5, borderDash:[5,3],
+    label:{ display:true, content:'Today', position:'start',
+      backgroundColor:'rgba(220,38,38,.85)', color:'#fff',
+      font:{size:9,weight:'700'}, padding:3, xAdjust:2 }};
+}
+function annoGap(s, e, label) {
+  return { type:'box', xMin:s, xMax:e,
+    backgroundColor:'rgba(220,38,38,.04)',
+    borderColor:'rgba(220,38,38,.28)', borderWidth:1,
+    label:{ display:true, content:label, position:{x:'center',y:'start'},
+      backgroundColor:'rgba(220,38,38,.76)', color:'#fff',
+      font:{size:8,weight:'700'}, padding:3, yAdjust:10 }};
+}
+function annoVline(idx, label, color) {
+  color = color || 'rgba(249,115,22,.42)';
+  return { type:'line', xMin:idx, xMax:idx,
+    borderColor:color, borderWidth:1.2, borderDash:[3,3],
+    label:{ display:true, content:label, position:'end',
+      backgroundColor:color.replace(/[\d.]+\)$/, '0.88)'), color:'#fff',
+      font:{size:8,weight:'700'}, padding:2, yAdjust:-2 }};
+}
+
+// ── Common chart options factory ──────────────────────────────
+function chartOpts(annotations, yOpts, extraScales) {
+  return {
+    responsive: true, maintainAspectRatio: false,
+    interaction: { mode:'index', intersect:false },
+    plugins: {
+      legend: { display:false },
+      tooltip: {
+        backgroundColor:'rgba(26,31,28,.93)', padding:10,
+        titleFont:{size:11,weight:'700'}, bodyFont:{size:10},
+        callbacks: { label: c => {
+          const v = c.parsed.y;
+          if (v === null || v === undefined) return null;
+          return ` ${c.dataset.label}: ${v.toLocaleString()}`;
+        }}
+      },
+      annotation: { annotations }
+    },
+    scales: Object.assign({
+      x: { grid:{color:'rgba(219,227,222,.5)'},
+        ticks:{maxTicksLimit:14, maxRotation:0, font:{size:9}, color:'#5a6b62'} }
+    }, yOpts, extraScales || {})
+  };
+}
+
+function yScale(label, max, color) {
+  color = color || '#5a6b62';
+  return { min:0, max,
+    title:{display:true, text:label, font:{size:9}, color},
+    grid:{color:'rgba(219,227,222,.5)'},
+    ticks:{font:{size:9}, color,
+      callback: v => v >= 1000 ? (v/1000).toFixed(0)+'k' : v }};
+}
+
+// ══════════════════════════════════════════════════════════════
+// CHART 1 · POSTS DELIVERY (warm) + PILE INSTALLATION (cool)
+// ══════════════════════════════════════════════════════════════
+(function() {
+  // Delivery
+  const delivBL = blArr(dayOf(3,30), dayOf(6,21), 31647);
+  const lot1Pts = [
+    [dayOf(4,6),2158],[dayOf(4,7),3034],[dayOf(4,9),3544],[dayOf(4,10),5303],
+    [dayOf(4,13),6721],[dayOf(4,16),7876],[dayOf(4,28),9858],[dayOf(4,29),10692],
+    [dayOf(4,30),11373],[dayOf(5,1),11535],[dayOf(5,5),12357],[dayOf(5,6),13089],
+    [dayOf(5,7),13698],[dayOf(5,8),14846],[dayOf(5,19),15092],[dayOf(5,20),15253],
+    [dayOf(5,21),15415],[dayOf(5,28),15751]
+  ];
+  const lot2Pts = [
+    [dayOf(6,18),15751+540],[dayOf(6,19),15751+1376],[dayOf(6,22),15751+2304],
+    [dayOf(6,24),15751+2394],[dayOf(6,25),15751+3530],[dayOf(6,26),15751+4842],
+    [dayOf(6,29),15751+5818],[dayOf(7,2),15751+6504],[dayOf(7,3),15751+8028],
+    [dayOf(7,6),15751+8984],[dayOf(7,7),15751+10034],[dayOf(7,8),15751+10737],
+    [dayOf(7,9),15751+11217],[dayOf(7,10),15751+12388],[dayOf(7,14),15751+13522],
+    [dayOf(7,15),15751+13822],[dayOf(7,16),15751+14584],[dayOf(7,17),15751+15896]
+  ];
+  const lot1Line = delivArr(lot1Pts);
+  const lot2Line = delivArr(lot2Pts);
+
+  // Installation
+  const installBL  = blArr(dayOf(2,20), dayOf(6,8), 31352);
+  const installCur = curArr(dayOf(4,15), dayOf(6,25), 14994, dayOf(6,22), dayOf(7,28), 16358);
+  const installReq = reqArr(TODAY, 15707, dayOf(7,28), 31352);
+  const installDot = dotArr(15707);
+
+  const gapS  = dayOff.findIndex(d => d >= dayOf(5,28));
+  const gapE  = dayOff.findIndex(d => d >= dayOf(6,18));
+  const l2i   = lot2Idx(dayOf(6,22));
+
+  new Chart(document.getElementById('cPosts').getContext('2d'), {
+    type:'line',
+    data:{ labels, datasets:[
+      // ── Delivery (warm) ──
+      { label:'GC Delivery BL (committed)',
+        data:delivBL, borderColor:'#92400e', borderWidth:2.5, borderDash:[8,5],
+        pointRadius:0, tension:.35, spanGaps:false, order:6 },
+      { label:'Lot 1 Actual Delivery',
+        data:lot1Line, borderColor:'#d97706', backgroundColor:'rgba(217,119,6,.1)',
+        borderWidth:3, pointRadius:lot1Line.map(v=>v!==null?3:0),
+        pointBackgroundColor:'#d97706', stepped:'after', tension:.1,
+        spanGaps:false, fill:true, order:4 },
+      { label:'Lot 2 Planned Delivery',
+        data:lot2Line, borderColor:'#f97316', borderWidth:3,
+        pointRadius:lot2Line.map(v=>v!==null?3:0), pointBackgroundColor:'#f97316',
+        stepped:'after', tension:.1, spanGaps:false, order:3 },
+      // ── Installation (cool) ──
+      { label:'Install Contract BL',
+        data:installBL, borderColor:'#1e3a5f', borderWidth:2.5, borderDash:[8,5],
+        pointRadius:0, tension:.35, spanGaps:false, order:7 },
+      { label:'Install Current Plan',
+        data:installCur, borderWidth:3, pointRadius:0, tension:.3,
+        spanGaps:false, segment:{ borderColor: segColor(l2i) }, order:2 },
+      { label:'Required Rate',
+        data:installReq, borderColor:'#dc2626', borderWidth:2, borderDash:[6,4],
+        pointRadius:0, tension:0, spanGaps:false, order:1 },
+      { label:'Actual Jun 22 (15,707)',
+        data:installDot, borderColor:'#16a34a', backgroundColor:'#16a34a',
+        pointRadius:installDot.map(v=>v!==null?9:0), pointStyle:'triangle',
+        showLine:false, order:0 }
+    ]},
+    options: chartOpts(
+      { today:annoToday(), gap:annoGap(gapS,gapE,'21-CD Delivery Gap'),
+        l2start:annoVline(gapE,'Lot 2 Begins') },
+      { y: yScale('Cumulative Posts / Piles Installed', 34000) }
+    )
+  });
+})();
+
+// ══════════════════════════════════════════════════════════════
+// CHART 2 · PURLIN DELIVERY (warm) + PURLIN INSTALLATION (cool)
+// ══════════════════════════════════════════════════════════════
+(function() {
+  const delivBL = blArr(dayOf(4,20), dayOf(6,21), 206479);
+  const purlinPts = [
+    [dayOf(6,17),11520],[dayOf(6,23),59365],[dayOf(6,24),67402],
+    [dayOf(6,26),83675],[dayOf(7,7),95195],[dayOf(7,8),100955],
+    [dayOf(7,9),117029],[dayOf(7,10),122289],[dayOf(7,14),138363],
+    [dayOf(7,15),162474],[dayOf(7,16),186585]
+  ];
+  const delivPlan = delivArr(purlinPts);
+  const nonConf   = dayOff.map(d => (d >= dayOf(4,23) && d <= dayOf(6,16)) ? 19894 : null);
+
+  const installBL  = blArr(dayOf(3,27), dayOf(7,14), 176442);
+  const installCur = curArr(dayOf(5,28), dayOf(7,31), 84404, dayOf(8,1), dayOf(9,18), 92038);
+  const installReq = reqArr(TODAY, 0, dayOf(9,18), 176442);
+
+  const ncIdx  = dayOff.findIndex(d => d >= dayOf(4,23));
+  const l2i    = lot2Idx(dayOf(6,17));
+  const ins2i  = lot2Idx(dayOf(8,1));
+
+  new Chart(document.getElementById('cPurlins').getContext('2d'), {
+    type:'line',
+    data:{ labels, datasets:[
+      // ── Delivery (warm) ──
+      { label:'GC Delivery BL (committed)',
+        data:delivBL, borderColor:'#92400e', borderWidth:2.5, borderDash:[8,5],
+        pointRadius:0, tension:.35, spanGaps:false, order:6 },
+      { label:'Non-conforming Rcvd (excl.)',
+        data:nonConf, borderColor:'#9ca3af', backgroundColor:'rgba(156,163,175,.12)',
+        borderWidth:2, borderDash:[4,3], pointRadius:0,
+        spanGaps:false, fill:true, order:5 },
+      { label:'2nd Batch Planned (usable)',
+        data:delivPlan, borderColor:'#f97316', backgroundColor:'rgba(249,115,22,.1)',
+        borderWidth:3, pointRadius:delivPlan.map(v=>v!==null?3:0),
+        pointBackgroundColor:'#f97316', stepped:'after',
+        spanGaps:false, fill:true, order:3 },
+      // ── Installation (cool) ──
+      { label:'Install Contract BL',
+        data:installBL, borderColor:'#1e3a5f', borderWidth:2.5, borderDash:[8,5],
+        pointRadius:0, tension:.35, spanGaps:false, order:7 },
+      { label:'Install Current Plan',
+        data:installCur, borderWidth:3, pointRadius:0, tension:.3,
+        spanGaps:false, segment:{ borderColor: segColor(ins2i) }, order:2 },
+      { label:'Required Rate',
+        data:installReq, borderColor:'#dc2626', borderWidth:2, borderDash:[6,4],
+        pointRadius:0, tension:0, spanGaps:false, order:1 }
+    ]},
+    options: chartOpts(
+      { today: annoToday(),
+        ncMark: { type:'line', xMin:ncIdx, xMax:ncIdx,
+          borderColor:'rgba(107,114,128,.55)', borderWidth:1.5, borderDash:[4,3],
+          label:{ display:true, content:['~19.9K rcvd Apr 23','NON-CONFORMING'],
+            position:'end', backgroundColor:'rgba(75,85,99,.88)', color:'#fff',
+            font:{size:7,weight:'700'}, padding:3, yAdjust:6 }},
+        l2start: annoVline(l2i, '1st Usable Jun 17') },
+      { y: yScale('Cumulative Purlins / Correas', 215000) }
+    )
+  });
+})();
+
+// ══════════════════════════════════════════════════════════════
+// CHART 3 · TORQUE TUBES (left Y, warm) + TRACKER ROWS (right Y, cool)
+// ══════════════════════════════════════════════════════════════
+(function() {
+  const tubeBL = blArr(dayOf(4,20), dayOf(6,21), 29056);
+  const tubeActPts = [
+    [dayOf(4,21),1184],[dayOf(4,22),1856],[dayOf(4,23),2736],[dayOf(4,24),4928],
+    [dayOf(4,28),6016],[dayOf(4,29),6304],[dayOf(4,30),7264],[dayOf(5,14),7616],
+    [dayOf(5,20),8576],[dayOf(5,21),9136],[dayOf(5,22),10000],[dayOf(5,27),10352],
+    [dayOf(5,28),11264],[dayOf(5,29),13424]
+  ];
+  const tubePlanPts = [
+    [dayOf(4,21),1184],[dayOf(4,22),1856],[dayOf(4,23),2736],[dayOf(4,24),4928],
+    [dayOf(4,28),6016],[dayOf(4,29),6304],[dayOf(4,30),7264],[dayOf(5,14),7616],
+    [dayOf(5,20),8576],[dayOf(5,21),9136],[dayOf(5,22),10000],[dayOf(5,27),10624],
+    [dayOf(5,28),11536],[dayOf(5,29),13696],[dayOf(6,1),13952],[dayOf(6,16),14864],
+    [dayOf(6,17),15712],[dayOf(6,18),16592],[dayOf(6,19),17792],[dayOf(6,23),18752],
+    [dayOf(6,24),19936],[dayOf(6,25),20640],[dayOf(6,26),21216],[dayOf(6,30),22128],
+    [dayOf(7,1),23040],[dayOf(7,2),23968],[dayOf(7,3),24608],[dayOf(7,7),24848],
+    [dayOf(7,8),25712],[dayOf(7,9),26640],[dayOf(7,10),27600],[dayOf(7,14),28496],
+    [dayOf(7,17),29056]
+  ];
+  const tubeAct  = delivArr(tubeActPts);
+  const tubePlan = delivArr(tubePlanPts);
+
+  const trackBL  = blArr(dayOf(3,27), dayOf(7,14), 2486);
+  const trackCur = curArr(dayOf(5,28), dayOf(7,24), 1187, dayOf(8,1), dayOf(8,19), 1299);
+  const trackReq = reqArr(TODAY, 107, dayOf(8,19), 2486);
+  const trackDot = dotArr(107);
+
+  const gapS   = dayOff.findIndex(d => d >= dayOf(5,29));
+  const gapE   = dayOff.findIndex(d => d >= dayOf(6,16));
+  const l2tube = lot2Idx(dayOf(6,16));
+  const l2track= lot2Idx(dayOf(8,1));
+
+  new Chart(document.getElementById('cTubes').getContext('2d'), {
+    type:'line',
+    data:{ labels, datasets:[
+      // ── Tubes / Delivery (warm → left Y) ──
+      { label:'Tube Delivery BL (committed)',
+        data:tubeBL, yAxisID:'y',
+        borderColor:'#92400e', borderWidth:2.5, borderDash:[8,5],
+        pointRadius:0, tension:.35, spanGaps:false, order:6 },
+      { label:'Lot 1 Actual Tubes',
+        data:tubeAct, yAxisID:'y',
+        borderColor:'#d97706', backgroundColor:'rgba(217,119,6,.1)',
+        borderWidth:3, pointRadius:tubeAct.map(v=>v!==null?3:0),
+        pointBackgroundColor:'#d97706', stepped:'after',
+        spanGaps:false, fill:true, order:4 },
+      { label:'Lot 2 Planned Tubes',
+        data:tubePlan, yAxisID:'y',
+        borderColor:'#f97316', borderWidth:3,
+        pointRadius:tubePlan.map(v=>v!==null?2:0),
+        pointBackgroundColor:'#f97316', stepped:'after',
+        spanGaps:false, order:3 },
+      // ── Tracker rows / Installation (cool → right Y) ──
+      { label:'Tracker BL (contract)',
+        data:trackBL, yAxisID:'y1',
+        borderColor:'#1e3a5f', borderWidth:2.5, borderDash:[8,5],
+        pointRadius:0, tension:.35, spanGaps:false, order:7 },
+      { label:'Tracker Current Plan',
+        data:trackCur, yAxisID:'y1',
+        borderWidth:3, pointRadius:0, tension:.3,
+        spanGaps:false, segment:{ borderColor: segColor(l2track) }, order:2 },
+      { label:'Required Rate (rows)',
+        data:trackReq, yAxisID:'y1',
+        borderColor:'#dc2626', borderWidth:2, borderDash:[6,4],
+        pointRadius:0, tension:0, spanGaps:false, order:1 },
+      { label:'Actual Jun 16 (107 rows)',
+        data:trackDot, yAxisID:'y1',
+        borderColor:'#16a34a', backgroundColor:'#16a34a',
+        pointRadius:trackDot.map(v=>v!==null?9:0), pointStyle:'triangle',
+        showLine:false, order:0 }
+    ]},
+    options: chartOpts(
+      { today: annoToday(),
+        gap:    annoGap(gapS, gapE, '17-CD Tube Gap'),
+        l2:     annoVline(gapE, 'Lot 2 Tubes') },
+      {},
+      {
+        y: Object.assign(yScale('Cumulative Torque Tubes (left axis)', 32000, '#92400e'),
+           { position:'left' }),
+        y1: Object.assign(yScale('Cumulative Tracker Rows (right axis)', 2800, '#2563eb'),
+           { position:'right', grid:{ drawOnChartArea:false },
+             ticks:{ font:{size:9}, color:'#2563eb',
+               callback: v => v.toLocaleString() } })
+      }
+    )
+  });
+})();
+</script>
+</body>
+</html>
