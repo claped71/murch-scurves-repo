@@ -602,9 +602,9 @@ function yScale(label, max, color) {
   const delivPlan = delivArr(purlinPts);
   const nonConf   = dayOff.map(d => (d >= dayOf(4,23) && d <= dayOf(6,16)) ? 19894 : null);
 
-  const installBL  = blArr(dayOf(3,27), dayOf(7,14), 176442);
-  const installCur = curArr(dayOf(5,28), dayOf(7,31), 84404, dayOf(8,1), dayOf(9,18), 92038);
-  const installReq = reqArr(TODAY, 0, dayOf(9,18), 176442);
+  const installBL  = blArr(dayOf(3,27), dayOf(7,14), 186585);
+  const installCur = curArr(dayOf(5,28), dayOf(7,31), 84404, dayOf(8,1), dayOf(9,18), 102181);
+  const installReq = reqArr(TODAY, 0, dayOf(9,18), 186585);
 
   const ncIdx  = dayOff.findIndex(d => d >= dayOf(4,23));
   const l2i    = lot2Idx(dayOf(6,17));
