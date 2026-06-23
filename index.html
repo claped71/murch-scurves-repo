@@ -79,7 +79,7 @@
   </div>
   <div class="header-right">
     <strong>Murch Solar — 102 MWp</strong>
-    Van Buren County, MI &nbsp;|&nbsp; Jun 22, 2026
+    Van Buren County, MI &nbsp;|&nbsp; Jun 23, 2026
   </div>
 </div>
 
@@ -114,7 +114,7 @@
             </h3>
             <div class="lot-tags">
               <span class="lot-tag lt1">Lot 1: 14,994 piles (202″) — Apr 15 → Jun 25</span>
-              <span class="lot-tag lt2">Lot 2: 15,591 remaining — Jun 23 delivery wave pending POD · 7 machines · United Zone F started</span>
+              <span class="lot-tag lt2">Lot 2: 15,490 remaining — 1,207-pile buffer · Jun 24 delivery wave pending POD</span>
             </div>
           </div>
         </div>
@@ -122,8 +122,8 @@
         <div class="stats-bar">
           <div class="stat"><div class="stat-label">BL Rate (avg)</div><div class="stat-value green">407/WD</div><div class="stat-sub">77 WD planned</div></div>
           <div class="stat"><div class="stat-label">Lot 1 Actual Rate</div><div class="stat-value green">~288/WD</div><div class="stat-sub">Zone F (United) started Jun 22</div></div>
-          <div class="stat"><div class="stat-label">Lot 2 Required</div><div class="stat-value red">~560/WD</div><div class="stat-sub">Jun 23 wave still pending POD</div></div>
-          <div class="stat"><div class="stat-label">Installed Jun 22</div><div class="stat-value amber">15,761</div><div class="stat-sub">50.3% of 31,352</div></div>
+          <div class="stat"><div class="stat-label">Lot 2 Required</div><div class="stat-value red">~560/WD</div><div class="stat-sub">Current buffer ≈ 2.2 days</div></div>
+          <div class="stat"><div class="stat-label">Installed Jun 23</div><div class="stat-value amber">15,862</div><div class="stat-sub">50.6% of 31,352</div></div>
           <div class="stat"><div class="stat-label">Finish Forecast</div><div class="stat-value red">Jul 28</div><div class="stat-sub">BL: Jun 8 (−50 CD)</div></div>
         </div>
         <div class="legend-bar">
@@ -464,14 +464,14 @@
       <strong style="color:var(--red)">Management requirement:</strong> COD Nov 9 is feasible only in the optimistic scenario — zero float remains.
       Track all recovery gates daily by block. A single miss in piles, purlins, or modules cascades directly to COD.
       Pile capacity (560/day) remains below the estimated recovery need (752/day). Continuous material supply and same-week QA turnover are non-negotiable.
-      Latest delivery control: Shreeya confirmed 11 scheduled trucks for Jun 23, including 658 pile/posts and major purlin/racking components; these remain pending until POD/site receipt. Manuel's receiving cap is max 16 trucks/day, max 8 pile loads/day, max 8 non-pile loads/day, and max 3 loads/hour.
+      Latest delivery control: the official workbook shows 17,069 piles delivered versus 15,862 installed, a 1,207-pile buffer. Shreeya scheduled six trucks for Jun 24 with 90 posts and major tracker/racking components; these remain pending until POD/site receipt. Manuel's receiving cap remains max 16 trucks/day, max 8 pile loads/day, max 8 non-pile loads/day, and max 3 loads/hour.
       Source: Murch Project Dashboard &amp; 4D Interactive Schedule, Jun 23, 2026.
     </p>
   </div>
 
   <div class="footer">
     Murch Solar — 102 MWp &nbsp;|&nbsp; Van Buren County, MI &nbsp;|&nbsp; EPC: Greensol Energy &nbsp;|&nbsp;
-    S-Curves updated: June 23, 2026 &nbsp;|&nbsp; Source: Const. Management Delivery/Mechanical workbook Jun 22 · GameChange delivery plan Jun 15 · Shreeya / Manuel delivery correspondence Jun 22 · Murch Project Dashboard Jun 23
+    S-Curves updated: June 23, 2026 &nbsp;|&nbsp; Source: Const. Management Delivery/Mechanical workbook Jun 23 · Shreeya / Manuel delivery correspondence through Jun 23 · Murch Project Dashboard Jun 23
   </div>
 
 </div>
@@ -484,7 +484,7 @@ function dayOf(m, d) { return Math.round((new Date(2026, m-1, d) - JAN1) / 86400
 const D = {
   feb20: dayOf(2,20),  mar27: dayOf(3,27),  apr15: dayOf(4,15),
   apr22: dayOf(4,22),  may1:  dayOf(5,1),   may28: dayOf(5,28),
-  jun8:  dayOf(6,8),   jun17: dayOf(6,17),  jun22: dayOf(6,22),  jun22b: dayOf(6,22),
+  jun8:  dayOf(6,8),   jun17: dayOf(6,17),  jun22: dayOf(6,22),  jun23: dayOf(6,23),
   jun24: dayOf(6,24),  jun25: dayOf(6,25),  jul1:  dayOf(7,1),
   jul14: dayOf(7,14),  jul24: dayOf(7,24),  jul28: dayOf(7,28),
   jul31: dayOf(7,31),  aug1:  dayOf(8,1),   aug5:  dayOf(8,5),
@@ -501,7 +501,7 @@ while (cur <= new Date(2026, 10, 1)) {
   dayOff.push(Math.round((cur - JAN1) / 86400000));
   cur.setDate(cur.getDate() + 7);
 }
-const todayIdx    = dayOff.findIndex(d => d >= D.jun22);
+const todayIdx    = dayOff.findIndex(d => d >= D.jun23);
 const gapStartIdx = dayOff.findIndex(d => d >= D.apr22);
 const gapEndIdx   = dayOff.findIndex(d => d >= D.jun22);
 
@@ -547,8 +547,8 @@ function lot2Idx(l2s) { return dayOff.findIndex(d => d >= l2s); }
 // PILING
 const pilingBL  = blArr (D.feb20, D.jun8,  31352);
 const pilingCur = curArr(D.apr15, D.jun25, 14994, D.jun22, D.jul28, 16358);
-const pilingReq = reqArr(D.jun22, 15761, D.jul28, 31352);
-const pilingDot = dayOff.map((d,i) => i === todayIdx ? 15761 : null);
+const pilingReq = reqArr(D.jun23, 15862, D.jul28, 31352);
+const pilingDot = dayOff.map((d,i) => i === todayIdx ? 15862 : null);
 const pLot2Idx  = lot2Idx(D.jun22);
 
 // TRACKERS
@@ -929,6 +929,7 @@ const lot1DelivPts = [
   [dayOf(5,1), 11535],  [dayOf(5,5), 12357],  [dayOf(5,6), 13089],
   [dayOf(5,7), 13698],  [dayOf(5,8), 14846],  [dayOf(5,19),15092],
   [dayOf(5,20),15253],  [dayOf(5,21),15415],  [dayOf(5,28),15751],
+  [dayOf(6,23),17069],
 ];
 
 // Lot 2 planned cumulative delivery by date (offset from Lot1 total = 15,751)

@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Murch Solar — GC Delivery vs. Production S-Curves | Jun 22, 2026</title>
+<title>Murch Solar — GC Delivery vs. Production S-Curves | Jun 23, 2026</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-annotation/3.0.1/chartjs-plugin-annotation.min.js"></script>
 <style>
@@ -141,7 +141,7 @@ tr:last-child td{border-bottom:none}
   </div>
   <div class="header-right">
     <strong>Murch Solar — 102 MWp</strong>
-    Van Buren County, MI &nbsp;|&nbsp; Jun 22, 2026
+    Van Buren County, MI &nbsp;|&nbsp; Jun 23, 2026
   </div>
 </div>
 
@@ -153,7 +153,7 @@ tr:last-child td{border-bottom:none}
     <strong style="color:#a5b4fc">Cool colors (blue / violet)</strong> = Production installation — cumulative units physically installed. &nbsp;
     When the <strong style="color:#fff">warm line sits above the cool line</strong>, material is buffered ahead of crews — healthy.
     When the <strong style="color:#fca5a5">warm line is flat or absent</strong>, installation is blocked by missing supply.
-    Jun 23 scheduled deliveries are <strong style="color:#fcd34d">pending POD/site receipt</strong> and are not counted as actual material received until confirmed.
+    The June 23 official workbook records <strong style="color:#86efac">17,069 piles delivered</strong>. June 24 scheduled deliveries remain <strong style="color:#fcd34d">pending POD/site receipt</strong>.
   </span>
 </div>
 
@@ -187,7 +187,7 @@ tr:last-child td{border-bottom:none}
       <div class="tags">
         <span class="tag td">📦 Delivered Lot 1: 15,751 posts (complete)</span>
         <span class="tag tw">📦 Jun 23 scheduled: 658 posts · pending POD/site receipt</span>
-        <span class="tag ti">🔩 Installed Jun 22: 15,761 piles (49.8%)</span>
+        <span class="tag ti">🔩 Installed Jun 23: 15,862 piles (50.6%)</span>
       </div>
     </div>
     <div class="color-key">
@@ -203,7 +203,7 @@ tr:last-child td{border-bottom:none}
         <div class="ck-row"><span class="ck-dashed" style="color:#1e3a5f"></span>Contract baseline</div>
         <div class="ck-row"><span class="ck-swatch" style="background:linear-gradient(to right,#2563eb 50%,#7c3aed 50%)"></span>Current plan (Lot 1→2)</div>
         <div class="ck-row"><span class="ck-dashed" style="color:#dc2626"></span>Required rate</div>
-        <div class="ck-row"><span style="color:#16a34a;font-size:13px;line-height:1">▲</span>&nbsp;Actual Jun 22</div>
+        <div class="ck-row"><span style="color:#16a34a;font-size:13px;line-height:1">▲</span>&nbsp;Actual Jun 23</div>
       </div>
     </div>
   </div>
@@ -211,7 +211,7 @@ tr:last-child td{border-bottom:none}
   <div class="stats-bar">
     <div class="stat"><div class="slabel">GC BL Finish</div><div class="sval vg">Jun 21</div><div class="ssub">Original commitment</div></div>
     <div class="stat"><div class="slabel">Delivery Gap</div><div class="sval vr">21 CD</div><div class="ssub">May 28 → Jun 18 · no posts</div></div>
-    <div class="stat"><div class="slabel">Installed Jun 22</div><div class="sval va">15,761</div><div class="ssub">49.8% of 31,647</div></div>
+    <div class="stat"><div class="slabel">Installed Jun 23</div><div class="sval va">15,862</div><div class="ssub">50.6% of 31,352</div></div>
     <div class="stat"><div class="slabel">Jun 23 Wave</div><div class="sval vo">658</div><div class="ssub">Scheduled posts · pending POD</div></div>
     <div class="stat"><div class="slabel">Install Forecast</div><div class="sval vr">Jul 28</div><div class="ssub">BL: Jun 8 · −50 CD slip</div></div>
     <div class="stat"><div class="slabel">Required Rate</div><div class="sval vb">~588/WD</div><div class="ssub">27 WD remaining · 15,886 posts</div></div>
@@ -396,7 +396,7 @@ tr:last-child td{border-bottom:none}
 
 <div class="footer">
   Murch Solar — 102 MWp &nbsp;|&nbsp; Van Buren County, MI &nbsp;|&nbsp; EPC: Greensol Energy &nbsp;|&nbsp;
-  Dashboard prepared: Jun 22, 2026 &nbsp;|&nbsp;
+  Dashboard prepared: Jun 23, 2026 &nbsp;|&nbsp;
   Source: CM Delivery/Mechanical workbook Jun 22 · GameChange delivery plan Jun 15 · Shreeya / Manuel delivery correspondence Jun 22 · Murch Project Dashboard Jun 23
 </div>
 
@@ -419,7 +419,7 @@ while (cur <= new Date(2026, 10, 15)) {
   dayOff.push(Math.round((cur - JAN1) / 86400000));
   cur.setDate(cur.getDate() + 7);
 }
-const TODAY    = dayOf(6, 22);
+const TODAY    = dayOf(6, 23);
 const todayIdx = dayOff.findIndex(d => d >= TODAY);
 
 // ── Core S-curve / line builders ──────────────────────────────
@@ -545,9 +545,9 @@ function yScale(label, max, color) {
 
   // Installation
   const installBL  = blArr(dayOf(2,20), dayOf(6,8), 31647);
-  const installCur = curArr(dayOf(4,15), dayOf(6,25), 14994, dayOf(6,22), dayOf(7,28), 16653);
-  const installReq = reqArr(TODAY, 15761, dayOf(7,28), 31647);
-  const installDot = dotArr(15761);
+  const installCur = curArr(dayOf(4,15), dayOf(6,25), 14994, dayOf(6,22), dayOf(7,28), 16358);
+  const installReq = reqArr(TODAY, 15862, dayOf(7,28), 31352);
+  const installDot = dotArr(15862);
 
   const gapS  = dayOff.findIndex(d => d >= dayOf(5,28));
   const gapE  = dayOff.findIndex(d => d >= dayOf(6,18));
@@ -579,7 +579,7 @@ function yScale(label, max, color) {
       { label:'Required Rate',
         data:installReq, borderColor:'#dc2626', borderWidth:2, borderDash:[6,4],
         pointRadius:0, tension:0, spanGaps:false, order:1 },
-      { label:'Actual Jun 22 (15,761)',
+      { label:'Actual Jun 23 (15,862)',
         data:installDot, borderColor:'#16a34a', backgroundColor:'#16a34a',
         pointRadius:installDot.map(v=>v!==null?9:0), pointStyle:'triangle',
         showLine:false, order:0 }
