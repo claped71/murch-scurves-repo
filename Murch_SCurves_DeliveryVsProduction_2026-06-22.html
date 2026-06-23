@@ -186,7 +186,7 @@ tr:last-child td{border-bottom:none}
       <div class="tags">
         <span class="tag td">📦 Delivered Lot 1: 15,751 posts (complete)</span>
         <span class="tag tw">📦 Lot 2 planned: 15,896 · Jun 18 → Jul 17</span>
-        <span class="tag ti">🔩 Installed Jun 22: 15,707 piles (49.6%)</span>
+        <span class="tag ti">🔩 Installed Jun 22: 15,761 piles (49.8%)</span>
       </div>
     </div>
     <div class="color-key">
@@ -210,10 +210,10 @@ tr:last-child td{border-bottom:none}
   <div class="stats-bar">
     <div class="stat"><div class="slabel">GC BL Finish</div><div class="sval vg">Jun 21</div><div class="ssub">Original commitment</div></div>
     <div class="stat"><div class="slabel">Delivery Gap</div><div class="sval vr">21 CD</div><div class="ssub">May 28 → Jun 18 · no posts</div></div>
-    <div class="stat"><div class="slabel">Installed Jun 22</div><div class="sval va">15,707</div><div class="ssub">49.6% of 31,647</div></div>
+    <div class="stat"><div class="slabel">Installed Jun 22</div><div class="sval va">15,761</div><div class="ssub">49.8% of 31,647</div></div>
     <div class="stat"><div class="slabel">Lot 2 Delivery End</div><div class="sval vo">Jul 17</div><div class="ssub">Planned · +26 CD vs BL</div></div>
     <div class="stat"><div class="slabel">Install Forecast</div><div class="sval vr">Jul 28</div><div class="ssub">BL: Jun 8 · −50 CD slip</div></div>
-    <div class="stat"><div class="slabel">Required Rate</div><div class="sval vb">~590/WD</div><div class="ssub">27 WD remaining · 15,940 posts</div></div>
+    <div class="stat"><div class="slabel">Required Rate</div><div class="sval vb">~588/WD</div><div class="ssub">27 WD remaining · 15,886 posts</div></div>
   </div>
 </div>
 
@@ -545,8 +545,8 @@ function yScale(label, max, color) {
   // Installation
   const installBL  = blArr(dayOf(2,20), dayOf(6,8), 31647);
   const installCur = curArr(dayOf(4,15), dayOf(6,25), 14994, dayOf(6,22), dayOf(7,28), 16653);
-  const installReq = reqArr(TODAY, 15707, dayOf(7,28), 31647);
-  const installDot = dotArr(15707);
+  const installReq = reqArr(TODAY, 15761, dayOf(7,28), 31647);
+  const installDot = dotArr(15761);
 
   const gapS  = dayOff.findIndex(d => d >= dayOf(5,28));
   const gapE  = dayOff.findIndex(d => d >= dayOf(6,18));
@@ -578,7 +578,7 @@ function yScale(label, max, color) {
       { label:'Required Rate',
         data:installReq, borderColor:'#dc2626', borderWidth:2, borderDash:[6,4],
         pointRadius:0, tension:0, spanGaps:false, order:1 },
-      { label:'Actual Jun 22 (15,707)',
+      { label:'Actual Jun 22 (15,761)',
         data:installDot, borderColor:'#16a34a', backgroundColor:'#16a34a',
         pointRadius:installDot.map(v=>v!==null?9:0), pointStyle:'triangle',
         showLine:false, order:0 }

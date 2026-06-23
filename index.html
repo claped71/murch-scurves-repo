@@ -123,7 +123,7 @@
           <div class="stat"><div class="stat-label">BL Rate (avg)</div><div class="stat-value green">407/WD</div><div class="stat-sub">77 WD planned</div></div>
           <div class="stat"><div class="stat-label">Lot 1 Actual Rate</div><div class="stat-value green">~288/WD</div><div class="stat-sub">Zone F (United) started Jun 22</div></div>
           <div class="stat"><div class="stat-label">Lot 2 Required</div><div class="stat-value red">~580/WD</div><div class="stat-sub">27 WD — 1.42× BL</div></div>
-          <div class="stat"><div class="stat-label">Installed Jun 22</div><div class="stat-value amber">15,707</div><div class="stat-sub">50.1% of 31,352</div></div>
+          <div class="stat"><div class="stat-label">Installed Jun 22</div><div class="stat-value amber">15,761</div><div class="stat-sub">50.3% of 31,352</div></div>
           <div class="stat"><div class="stat-label">Finish Forecast</div><div class="stat-value red">Jul 28</div><div class="stat-sub">BL: Jun 8 (−50 CD)</div></div>
         </div>
         <div class="legend-bar">
@@ -546,8 +546,8 @@ function lot2Idx(l2s) { return dayOff.findIndex(d => d >= l2s); }
 // PILING
 const pilingBL  = blArr (D.feb20, D.jun8,  31352);
 const pilingCur = curArr(D.apr15, D.jun25, 14994, D.jun22, D.jul28, 16358);
-const pilingReq = reqArr(D.jun22, 15707, D.jul28, 31352);
-const pilingDot = dayOff.map((d,i) => i === todayIdx ? 15707 : null);
+const pilingReq = reqArr(D.jun22, 15761, D.jul28, 31352);
+const pilingDot = dayOff.map((d,i) => i === todayIdx ? 15761 : null);
 const pLot2Idx  = lot2Idx(D.jun22);
 
 // TRACKERS
