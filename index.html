@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Murch Solar — S-Curves | Production Analysis | Jun 17, 2026</title>
+<title>Murch Solar — S-Curves | Production Analysis | Jul 1, 2026</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-annotation/3.0.1/chartjs-plugin-annotation.min.js"></script>
 <style>
@@ -79,7 +79,7 @@
   </div>
   <div class="header-right">
     <strong>Murch Solar — 102 MWp</strong>
-    Van Buren County, MI &nbsp;|&nbsp; Jun 27, 2026
+    Van Buren County, MI &nbsp;|&nbsp; Jul 1, 2026
   </div>
 </div>
 
@@ -94,8 +94,8 @@
 <div style="background:#4a1f00;color:#fde8cc;padding:8px 32px;font-size:11px;display:flex;align-items:center;gap:10px">
   <span style="background:#b54a00;border-radius:4px;padding:2px 8px;font-weight:700;font-size:10px;white-space:nowrap">ROOT CAUSE</span>
   <span>
-    All tracker-related delays (assembly, purlins, panels) are <strong style="color:#ffcc99">supplier-driven</strong> — GameChange Lot 1 delivery included torque tubes, bearings &amp; dampers but <strong style="color:#ffcc99">no usable purlins</strong>.
-    The June 25 workbook records <strong style="color:#86efac">17,727 piles delivered</strong> versus <strong style="color:#86efac">15,862 piles installed</strong>, leaving a 1,865-pile buffer. June 26 field pile output was <strong style="color:#fca5a5">340 piles</strong> versus the 560/day target, with Area F hard soil and hincadora availability now controlling the acceleration curve.
+    All tracker-related delays (assembly, purlins, panels) are <strong style="color:#ffcc99">supplier-driven</strong> — GameChange Lot 1 delivery included torque tubes, bearings &amp; dampers but <strong style="color:#ffcc99">no purlins</strong>.
+    Without purlins, tracker assembly is physically blocked in all completed pile zones. 2nd batch flowing: <strong style="color:#ffcc99">77,605 usable purlins received</strong> (41.6% of 186,585) through Jul 1 — balance due by Jul 16, +25 CD past the committed date.
   </span>
 </div>
 
@@ -114,23 +114,23 @@
             </h3>
             <div class="lot-tags">
               <span class="lot-tag lt1">Lot 1: 14,994 piles (202″) — Apr 15 → Jun 25</span>
-              <span class="lot-tag lt2">Lot 2: 15,490 remaining — 1,865-pile buffer · no newer POD-confirmed pile receipt after Jun 23</span>
+              <span class="lot-tag lt2">Lot 2: 14,284 remaining — 2,364-pile buffer · 3,681 Lot 2 posts received thru Jul 1</span>
             </div>
           </div>
         </div>
         <div class="chart-canvas-wrap"><canvas id="chartPiling"></canvas></div>
         <div class="stats-bar">
           <div class="stat"><div class="stat-label">BL Rate (avg)</div><div class="stat-value green">407/WD</div><div class="stat-sub">77 WD planned</div></div>
-          <div class="stat"><div class="stat-label">Lot 1 Actual Rate</div><div class="stat-value green">~288/WD</div><div class="stat-sub">Zone F (United) started Jun 22</div></div>
-          <div class="stat"><div class="stat-label">Lot 2 Required</div><div class="stat-value red">~560/WD</div><div class="stat-sub">Current buffer ≈ 3.3 days</div></div>
-          <div class="stat"><div class="stat-label">Installed Jun 23</div><div class="stat-value amber">15,862</div><div class="stat-sub">50.6% of 31,352</div></div>
-          <div class="stat"><div class="stat-label">Finish Forecast</div><div class="stat-value red">Jul 28</div><div class="stat-sub">BL: Jun 8 (−50 CD)</div></div>
+          <div class="stat"><div class="stat-label">Actual Rate (last 2 wks)</div><div class="stat-value red">~122/WD</div><div class="stat-sub">vs ~288/WD Lot 1 avg ⚠</div></div>
+          <div class="stat"><div class="stat-label">Lot 2 Required</div><div class="stat-value red">~621/WD</div><div class="stat-sub">5.1× current rate — buffer 2,364 piles</div></div>
+          <div class="stat"><div class="stat-label">Installed Jul 1</div><div class="stat-value amber">17,068</div><div class="stat-sub">54.4% of 31,352 · 19,432 delivered</div></div>
+          <div class="stat"><div class="stat-label">Finish Forecast</div><div class="stat-value red">Jul 28</div><div class="stat-sub">BL: Jun 8 (−50 CD) — at risk at current rate</div></div>
         </div>
         <div class="legend-bar">
           <span class="legend-item"><span class="l-dashed" style="color:#2769a8;width:28px"></span>Contract Baseline (ends Jun 8)</span>
           <span class="legend-item"><span class="l-line" style="background:linear-gradient(to right,#2769a8 50%,#d95f02 50%)"></span>Current Plan — Lot 1 (blue) → Lot 2 (purple) — ends Jul 28</span>
           <span class="legend-item"><span class="l-dashed" style="color:#b53030;width:28px"></span>Required Rate (linear)</span>
-          <span class="legend-item" style="color:#168a5b">▲ Official installed Jun 23 (15,862)</span>
+          <span class="legend-item" style="color:#168a5b">▲ Actual Jul 1 (17,068)</span>
         </div>
       </div>
 
@@ -152,7 +152,7 @@
           <div class="stat"><div class="stat-label">BL Rate (avg)</div><div class="stat-value green">31.9/WD</div><div class="stat-sub">78 WD planned</div></div>
           <div class="stat"><div class="stat-label">Zone 1 Required</div><div class="stat-value amber">~47/WD</div><div class="stat-sub">23 WD — after purlins arrive</div></div>
           <div class="stat"><div class="stat-label">Zone 2 Required</div><div class="stat-value red">100/WD</div><div class="stat-sub">~13 WD — 3.14× BL ⚠</div></div>
-          <div class="stat"><div class="stat-label">Installed Jun 16</div><div class="stat-value red">107</div><div class="stat-sub">4.3% — Area A (purlin-constrained)</div></div>
+          <div class="stat"><div class="stat-label">Installed Jul 1</div><div class="stat-value amber">493</div><div class="stat-sub">19.8% pre-assembled · 213 purlin-complete (8.6%)</div></div>
           <div class="stat"><div class="stat-label">Finish Forecast</div><div class="stat-value red">Aug 19</div><div class="stat-sub">BL: Jul 14 (−36 CD)</div></div>
         </div>
         <div class="legend-bar">
@@ -180,7 +180,7 @@
           <div class="stat"><div class="stat-label">BL Rate (avg)</div><div class="stat-value green">2,262/WD</div><div class="stat-sub">78 WD planned</div></div>
           <div class="stat"><div class="stat-label">Zone 1 Required</div><div class="stat-value amber">~1,918/WD</div><div class="stat-sub">44 WD — 0.85× BL</div></div>
           <div class="stat"><div class="stat-label">Zone 2 Required</div><div class="stat-value amber">2,630/WD</div><div class="stat-sub">~35 WD — 1.16× BL</div></div>
-          <div class="stat"><div class="stat-label">Installed Jun 10</div><div class="stat-value red">0</div><div class="stat-sub">No usable purlins on site yet</div></div>
+          <div class="stat"><div class="stat-label">Installed Jul 1</div><div class="stat-value amber">~15.1K est</div><div class="stat-sub">213 rows purlin-complete · 77,605 on site</div></div>
           <div class="stat"><div class="stat-label">Finish Forecast</div><div class="stat-value red">Sep 18</div><div class="stat-sub">BL: Jul 14 (−66 CD)</div></div>
         </div>
         <div class="legend-bar">
@@ -198,7 +198,7 @@
               <span>Modules cannot be mounted without purlins installed first — panels clamp directly onto purlins. Start gate = purlin delivery + tracker assembly complete. GC delivery delay is the direct driver of the Oct 9 forecast.</span>
             </h3>
             <div class="lot-tags">
-              <span class="lot-tag lt1">Lot 1: 82,030 panels (MV-11A/11B) — Jun 24 → Aug 19</span>
+              <span class="lot-tag lt1">Lot 1: 82,030 panels (MV-11A/11B) — Jun 24 → Aug 19 · start slipped, not started Jul 1</span>
               <span class="lot-tag lt2">Lot 2: 89,440 panels (MV-12A/12B) — Aug 19 → Oct 9</span>
             </div>
           </div>
@@ -208,7 +208,7 @@
           <div class="stat"><div class="stat-label">BL Rate (avg)</div><div class="stat-value green">2,198/WD</div><div class="stat-sub">78 WD planned</div></div>
           <div class="stat"><div class="stat-label">Zone 1 Required</div><div class="stat-value amber">~2,051/WD</div><div class="stat-sub">40 WD — 0.93× BL</div></div>
           <div class="stat"><div class="stat-label">Zone 2 Required</div><div class="stat-value amber">2,417/WD</div><div class="stat-sub">~37 WD — 1.10× BL</div></div>
-          <div class="stat"><div class="stat-label">Installed Jun 10</div><div class="stat-value red">0</div><div class="stat-sub">Blocked — awaiting purlins &amp; tracker assy</div></div>
+          <div class="stat"><div class="stat-label">Installed Jul 1</div><div class="stat-value red">0</div><div class="stat-sub">157,240 delivered (91.7%) — install gate: purlins</div></div>
           <div class="stat"><div class="stat-label">Finish Forecast</div><div class="stat-value red">Oct 9</div><div class="stat-sub">BL: Aug 18 (−52 CD)</div></div>
         </div>
         <div class="legend-bar">
@@ -232,7 +232,7 @@
           </h3>
           <div class="lot-tags">
             <span class="lot-tag lt1">Lot 1 — 202″ posts: 15,751 delivered &nbsp;|&nbsp; Apr 6 → May 28 (COMPLETE)</span>
-            <span class="lot-tag" style="background:#fff3e6;color:#d95f02">Lot 2 — 214″ posts: 15,896 planned &nbsp;|&nbsp; Jun 18 → Jul 17 (PENDING)</span>
+            <span class="lot-tag" style="background:#fff3e6;color:#d95f02">Lot 2 — 214″ posts: 3,681 of 15,896 received &nbsp;|&nbsp; Jun 18 → Jul 17 (IN PROGRESS)</span>
           </div>
         </div>
       </div>
@@ -241,7 +241,7 @@
         <div class="stat"><div class="stat-label">BL Delivery Window</div><div class="stat-value green">83 CD</div><div class="stat-sub">Mar 30 → Jun 21 (committed)</div></div>
         <div class="stat"><div class="stat-label">Lot 1 Window</div><div class="stat-value green">52 CD</div><div class="stat-sub">Apr 6 → May 28 (complete)</div></div>
         <div class="stat"><div class="stat-label">Delivery Gap</div><div class="stat-value red">21 CD</div><div class="stat-sub">May 28 → Jun 18 (zero deliveries)</div></div>
-        <div class="stat"><div class="stat-label">Lot 2 Window</div><div class="stat-value" style="color:#d95f02">29 CD</div><div class="stat-sub">Jun 18 → Jul 17 (planned)</div></div>
+        <div class="stat"><div class="stat-label">Lot 2 Received</div><div class="stat-value" style="color:#d95f02">3,681</div><div class="stat-sub">19,432 total on site (62.0%) — behind Lot 2 plan ≈2.1K</div></div>
         <div class="stat"><div class="stat-label">Total vs BL Finish</div><div class="stat-value red">+26 CD</div><div class="stat-sub">Jul 17 vs Jun 21 committed</div></div>
       </div>
       <div class="legend-bar">
@@ -265,14 +265,14 @@
           </h3>
           <div class="lot-tags">
             <span class="lot-tag" style="background:#f5f5f3;color:#5a6b62;border:1px solid #c0c8c4">⚠ 19,894 rcvd Apr 23 — non-conforming (excluded)</span>
-            <span class="lot-tag" style="background:#fff3e6;color:#d95f02">All usable purlins — 186,585 pending (Jun 17 → Jul 16)</span>
+            <span class="lot-tag" style="background:#fff3e6;color:#d95f02">2nd batch: 77,605 received · 108,980 pending (due Jul 16)</span>
           </div>
         </div>
       </div>
       <div class="chart-canvas-wrap" style="height:280px"><canvas id="chartPurlinDel"></canvas></div>
       <div class="stats-bar">
         <div class="stat"><div class="stat-label">BL Window</div><div class="stat-value green">62 CD</div><div class="stat-sub">Apr 20 → Jun 21 (committed)</div></div>
-        <div class="stat"><div class="stat-label">Usable Received</div><div class="stat-value red">0</div><div class="stat-sub">0% of 186,585</div></div>
+        <div class="stat"><div class="stat-label">Usable Received</div><div class="stat-value amber">77,605</div><div class="stat-sub">41.6% of 186,585 (thru Jul 1)</div></div>
         <div class="stat"><div class="stat-label">Non-conforming</div><div class="stat-value" style="color:#5a6b62">19,894</div><div class="stat-sub">Rcvd Apr 23 — excluded</div></div>
         <div class="stat"><div class="stat-label">2nd Batch Total</div><div class="stat-value" style="color:#d95f02">186,585</div><div class="stat-sub">Jun 17 → Jul 16</div></div>
         <div class="stat"><div class="stat-label">vs BL Finish</div><div class="stat-value red">+25 CD</div><div class="stat-sub">Jul 16 vs Jun 21 committed</div></div>
@@ -292,17 +292,17 @@
             <span>GC committed Apr 20 → Jun 21. Lot 1 zone delivered Apr 21 → May 29. 17-CD gap. Lot 2 zone continues Jun 16 → Jul 17 (+26 CD vs. committed).</span>
           </h3>
           <div class="lot-tags">
-            <span class="lot-tag lt1">Lot 1 zone — 13,424 delivered (Apr 21 → May 29)</span>
-            <span class="lot-tag" style="background:#fff3e6;color:#d95f02">Lot 2 zone — 15,632 pending (Jun 16 → Jul 17)</span>
+            <span class="lot-tag lt1">Lot 1 zone — 14,300 delivered (Apr 21 → May 29)</span>
+            <span class="lot-tag" style="background:#fff3e6;color:#d95f02">Lot 2 zone — 3,584 received · 12,048 pending (Jun 16 → Jul 17)</span>
           </div>
         </div>
       </div>
       <div class="chart-canvas-wrap" style="height:280px"><canvas id="chartTubeDel"></canvas></div>
       <div class="stats-bar">
         <div class="stat"><div class="stat-label">BL Window</div><div class="stat-value green">62 CD</div><div class="stat-sub">Apr 20 → Jun 21 (committed)</div></div>
-        <div class="stat"><div class="stat-label">Delivered</div><div class="stat-value green">13,424</div><div class="stat-sub">46.2% of total</div></div>
+        <div class="stat"><div class="stat-label">Delivered</div><div class="stat-value green">17,884</div><div class="stat-sub">61.6% of total (thru Jul 1)</div></div>
         <div class="stat"><div class="stat-label">Delivery Gap</div><div class="stat-value amber">17 CD</div><div class="stat-sub">May 29 → Jun 16</div></div>
-        <div class="stat"><div class="stat-label">Lot 2 Batch</div><div class="stat-value" style="color:#d95f02">15,632</div><div class="stat-sub">Jun 16 → Jul 17</div></div>
+        <div class="stat"><div class="stat-label">Lot 2 Batch</div><div class="stat-value" style="color:#d95f02">3,584 rcvd</div><div class="stat-sub">of 15,632 — Jun 16 → Jul 17</div></div>
         <div class="stat"><div class="stat-label">vs BL Finish</div><div class="stat-value red">+26 CD</div><div class="stat-sub">Jul 17 vs Jun 21 committed</div></div>
       </div>
       <div class="legend-bar">
@@ -323,9 +323,10 @@
         GC Lot 1 delivered piles, torque tubes, bearings, and some dampers — but <em>zero usable purlins</em>.
         Without purlins, tracker assembly is physically impossible regardless of pile completion status:
         modules clamp onto purlins, and purlins mount onto the torque tube — there is no installation step that can be reordered.
-        All 186,585 usable purlins arrive in the 2nd GC batch (Jun 17→Jul 16), 25 CD past the committed finish (Jun 21).
+        The 2nd GC batch is now flowing: 77,605 usable purlins (41.6%) received through Jul 1, with the balance due Jul 16 — 25 CD past the committed finish (Jun 21).
+        Purlin installation has started in Area A (213 rows purlin-complete).
         This single delivery gap cascades into a 36-CD tracker slip, 66-CD purlin slip, and 52-CD panel slip vs. contract baseline.
-        Rate compression in Lot 2 (654/WD piles, 100/WD trackers) reflects acceleration against supplier-caused lost time — not a
+        Rate compression in Lot 2 (621/WD piles, 100/WD trackers) reflects recovery against supplier-caused lost time — not a
         productivity failure. Panels and purlins at 1.10–1.16× BL are achievable with adequate crew mobilization.
       </div>
       <div style="background:#fff;border:1px solid var(--line);border-radius:8px;overflow:hidden">
@@ -344,8 +345,8 @@
               <td style="padding:7px 12px;font-weight:600">Pile Ramming</td>
               <td style="padding:7px 12px;text-align:right">407/WD</td>
               <td style="padding:7px 12px;text-align:right;background:#f0f5fd">~288/WD</td>
-              <td style="padding:7px 12px;text-align:right;background:#fff7f0;font-weight:700">654/WD</td>
-              <td style="padding:7px 12px;text-align:center;color:var(--red);font-weight:700">1.61×</td>
+              <td style="padding:7px 12px;text-align:right;background:#fff7f0;font-weight:700">621/WD</td>
+              <td style="padding:7px 12px;text-align:center;color:var(--red);font-weight:700">1.53×</td>
             </tr>
             <tr style="border-bottom:1px solid var(--line)">
               <td style="padding:7px 12px;font-weight:600">Tracker Assembly</td>
@@ -374,7 +375,85 @@
     </div>
   </div>
 
-  <!-- ── MILESTONES & ACCELERATION GATES ─────────────────────── -->
+  <!-- ── WEEKLY PLAN ──────────────────────────────────────────── -->
+  <div>
+    <div class="section-title">Weekly Plan — Jul 2 → Jul 8 (6 WD) · Targets Set by Schedule-Required Rates</div>
+    <div class="two-col">
+      <div style="background:#fff;border:1px solid var(--line);border-radius:8px;overflow:hidden">
+        <table style="width:100%;border-collapse:collapse;font-size:11px">
+          <thead>
+            <tr style="background:var(--green-dark);color:#fff">
+              <th style="padding:8px 12px;text-align:left">Activity</th>
+              <th style="padding:8px 12px;text-align:right">Required Rate</th>
+              <th style="padding:8px 12px;text-align:right">Week Target</th>
+              <th style="padding:8px 12px;text-align:right">Cum. by Jul 8</th>
+              <th style="padding:8px 12px;text-align:center">Priority</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="border-bottom:1px solid var(--line);background:#fdf0f0">
+              <td style="padding:7px 12px;font-weight:700;text-decoration:underline">Pile driving — Zones B / F / D / G</td>
+              <td style="padding:7px 12px;text-align:right;font-weight:700">621/WD</td>
+              <td style="padding:7px 12px;text-align:right;font-weight:700">3,726</td>
+              <td style="padding:7px 12px;text-align:right">20,794 (66%)</td>
+              <td style="padding:7px 12px;text-align:center"><span style="background:var(--red);color:#fff;padding:2px 7px;border-radius:3px;font-size:9px;font-weight:700">CRITICAL</span></td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--line);background:#fdf0f0">
+              <td style="padding:7px 12px;font-weight:700;text-decoration:underline">GC purlin receipts (supplier)</td>
+              <td style="padding:7px 12px;text-align:right;font-weight:700">~8.4K/CD</td>
+              <td style="padding:7px 12px;text-align:right;font-weight:700">~50,000</td>
+              <td style="padding:7px 12px;text-align:right">~128K (68%)</td>
+              <td style="padding:7px 12px;text-align:center"><span style="background:var(--red);color:#fff;padding:2px 7px;border-radius:3px;font-size:9px;font-weight:700">CRITICAL</span></td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--line);background:#fdf0f0">
+              <td style="padding:7px 12px;font-weight:700;text-decoration:underline">Module installation — START (Area A)</td>
+              <td style="padding:7px 12px;text-align:right;font-weight:700">ramp → 2,000/WD</td>
+              <td style="padding:7px 12px;text-align:right;font-weight:700">first 4–6K</td>
+              <td style="padding:7px 12px;text-align:right">≥4,000 (2.3%)</td>
+              <td style="padding:7px 12px;text-align:center"><span style="background:var(--red);color:#fff;padding:2px 7px;border-radius:3px;font-size:9px;font-weight:700">CRITICAL</span></td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--line)">
+              <td style="padding:7px 12px;font-weight:600">Tracker pre-assembly (Steps 1–6) — A→C→E</td>
+              <td style="padding:7px 12px;text-align:right">48/WD</td>
+              <td style="padding:7px 12px;text-align:right">285 rows</td>
+              <td style="padding:7px 12px;text-align:right">778 (31%)</td>
+              <td style="padding:7px 12px;text-align:center"><span style="background:var(--amber);color:#fff;padding:2px 7px;border-radius:3px;font-size:9px;font-weight:700">HIGH</span></td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--line)">
+              <td style="padding:7px 12px;font-weight:600">Purlin install / row completion — close Area A (98 rows), open C</td>
+              <td style="padding:7px 12px;text-align:right">→ 40 rows/day</td>
+              <td style="padding:7px 12px;text-align:right">~150 rows</td>
+              <td style="padding:7px 12px;text-align:right">~363 rows (15%)</td>
+              <td style="padding:7px 12px;text-align:center"><span style="background:var(--amber);color:#fff;padding:2px 7px;border-radius:3px;font-size:9px;font-weight:700">HIGH</span></td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--line)">
+              <td style="padding:7px 12px;font-weight:600">GC Lot 2 post receipts (supplier)</td>
+              <td style="padding:7px 12px;text-align:right">per GC plan</td>
+              <td style="padding:7px 12px;text-align:right">~7,050</td>
+              <td style="padding:7px 12px;text-align:right">~26.5K (85%)</td>
+              <td style="padding:7px 12px;text-align:center"><span style="background:var(--amber);color:#fff;padding:2px 7px;border-radius:3px;font-size:9px;font-weight:700">HIGH</span></td>
+            </tr>
+            <tr>
+              <td style="padding:7px 12px;font-weight:600">Electrical — MV plow/bore fronts &amp; inverter pads (6 of 23 remaining zones)</td>
+              <td style="padding:7px 12px;text-align:right">per 4D seq.</td>
+              <td style="padding:7px 12px;text-align:right">hold fronts</td>
+              <td style="padding:7px 12px;text-align:right">—</td>
+              <td style="padding:7px 12px;text-align:center"><span style="background:var(--blue);color:#fff;padding:2px 7px;border-radius:3px;font-size:9px;font-weight:700">WATCH</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="highlight-box">
+        <strong>Week logic — production criteria:</strong><br><br>
+        <u><strong>Piling is the week's #1 alarm</strong></u>: actual output collapsed to ~122/WD (Jun 17–30) while holding Jul 28 requires 621/WD. Material is on site (2,364-pile buffer) — the constraint is rig deployment, not delivery. Remobilize/add rigs to 8 active machines and verify every rig against the 80/day criterion daily.<br><br>
+        <u><strong>Purlin receipts remain the project critical-path gate</strong></u>: 108,980 units must land by Jul 16 (~8.4K/CD). Any purlin slip moves tracker completion, module start, and MC day-for-day.<br><br>
+        <u><strong>Module start is already 7+ CD late</strong></u> (plan Jun 24). With 77.6K purlins on site and 213 purlin-complete rows in Area A, first-panel install must begin this week to protect the Oct 9 module-complete gate — mobilize the module crew and QC clamp/torque procedure now.<br><br>
+        Tracker pre-assembly (48/WD) and row completion follow purlin availability zone-by-zone: close Area A, then C (piling 95% done), then E. Keep receiving inside Manuel's cap (16 trucks/day) and turn QA pile acceptance same-week so piling fronts never wait on QC.
+      </div>
+    </div>
+  </div>
+
+  <!-- ── MILESTONES & RECOVERY GATES ─────────────────────────── -->
   <div>
     <div class="section-title">Project Milestones — Contract vs. Current Forecast</div>
     <div class="two-col">
@@ -419,12 +498,12 @@
         </table>
       </div>
 
-      <!-- Acceleration gates -->
+      <!-- Recovery gates -->
       <div style="background:#fff;border:1px solid var(--line);border-radius:8px;overflow:hidden">
         <table style="width:100%;border-collapse:collapse;font-size:11px">
           <thead>
             <tr style="background:#163c35;color:#fff">
-              <th style="padding:8px 12px;text-align:left">COD Acceleration Gate</th>
+              <th style="padding:8px 12px;text-align:left">COD Recovery Gate</th>
               <th style="padding:8px 12px;text-align:center">Required Date</th>
               <th style="padding:8px 12px;text-align:right">Required Rate</th>
             </tr>
@@ -433,7 +512,7 @@
             <tr style="border-bottom:1px solid var(--line)">
               <td style="padding:7px 12px;font-weight:600">All piles installed &amp; QC accepted</td>
               <td style="padding:7px 12px;text-align:center;color:var(--red);font-weight:700">Jul 27–28, 2026</td>
-              <td style="padding:7px 12px;text-align:right">560/day · 7 machines × 80</td>
+              <td style="padding:7px 12px;text-align:right">621/day · 8 machines × 80 — actual last 2 wks ~122/day ⚠</td>
             </tr>
             <tr style="border-bottom:1px solid var(--line)">
               <td style="padding:7px 12px;font-weight:600">Tracker structure + full purlins complete</td>
@@ -462,16 +541,17 @@
     </div>
     <p style="font-size:10px;color:var(--muted);margin-top:8px;padding:0 2px">
       <strong style="color:var(--red)">Management requirement:</strong> COD Nov 9 is feasible only in the optimistic scenario — zero float remains.
-      Track all acceleration gates daily by block. A single miss in piles, purlins, or modules cascades directly to COD.
-      Pile capacity target is 560/day, but June 26 field output was 340 piles. Continuous material supply, harder Area F ground solutions, stronger/additional hincadoras, and same-week QA turnover are non-negotiable.
-      Latest delivery control: the official June 25 workbook shows 17,727 piles delivered versus 15,862 installed, a 1,865-pile buffer. No newer POD-confirmed pile receipt is shown after the June 23 recorded wave. Manuel's receiving cap remains max 16 trucks/day, max 8 pile loads/day, max 8 non-pile loads/day, and max 3 loads/hour.
-      Source: Murch Project Dashboard &amp; 4D Interactive Schedule, Jun 27, 2026.
+      Track all recovery gates daily by block. A single miss in piles, purlins, or modules cascades directly to COD.
+      Pile installation has fallen to ~122/WD over the last two weeks against a ~621/WD requirement to hold Jul 28 — the highest-priority production alarm on the project.
+      Latest delivery control (Jul 1 workbook): 19,432 piles delivered versus 17,068 installed — a 2,364-pile buffer, so material is no longer the piling constraint. GC Lot 2 deliveries continue daily (Shreeya's schedule through Jun 30 confirmed); receiving cap remains max 16 trucks/day, max 8 pile loads/day, max 8 non-pile loads/day, max 3 loads/hour.
+      Purlins: 77,605 usable units received (41.6%); tracker assembly 493 rows pre-assembled, 213 purlin-complete in Area A. Panels 91.7% delivered, zero installed — Lot 1 module start (plan Jun 24) has slipped.
+      Source: Const. Management Delivery/Mechanical workbook &amp; delivery correspondence, Jul 1, 2026.
     </p>
   </div>
 
   <div class="footer">
     Murch Solar — 102 MWp &nbsp;|&nbsp; Van Buren County, MI &nbsp;|&nbsp; EPC: Greensol Energy &nbsp;|&nbsp;
-    S-Curves updated: June 27, 2026 &nbsp;|&nbsp; Source: Const. Management Delivery/Mechanical workbook Jun 25 · WhatsApp field reports through Jun 26 · Murch Project Dashboard Jun 27
+    S-Curves updated: July 1, 2026 &nbsp;|&nbsp; Source: Const. Management Delivery/Mechanical workbook Jul 1 · Shreeya / Manuel delivery correspondence through Jun 30 · ProductionProgress workbook Jul 1
   </div>
 
 </div>
@@ -501,7 +581,7 @@ while (cur <= new Date(2026, 10, 1)) {
   dayOff.push(Math.round((cur - JAN1) / 86400000));
   cur.setDate(cur.getDate() + 7);
 }
-const todayIdx    = dayOff.findIndex(d => d >= D.jun23);
+const todayIdx    = dayOff.findIndex(d => d >= D.jul1);
 const gapStartIdx = dayOff.findIndex(d => d >= D.apr22);
 const gapEndIdx   = dayOff.findIndex(d => d >= D.jun22);
 
@@ -547,27 +627,27 @@ function lot2Idx(l2s) { return dayOff.findIndex(d => d >= l2s); }
 // PILING
 const pilingBL  = blArr (D.feb20, D.jun8,  31352);
 const pilingCur = curArr(D.apr15, D.jun25, 14994, D.jun22, D.jul28, 16358);
-const pilingReq = reqArr(D.jun23, 15862, D.jul28, 31352);
-const pilingDot = dayOff.map((d,i) => i === todayIdx ? 15862 : null);
+const pilingReq = reqArr(D.jul1, 17068, D.jul28, 31352);
+const pilingDot = dayOff.map((d,i) => i === todayIdx ? 17068 : null);
 const pLot2Idx  = lot2Idx(D.jun22);
 
 // TRACKERS
 const trackerBL  = blArr (D.mar27, D.jul14, 2486);
 const trackerCur = curArr(D.may28, D.jul24, 1187, D.aug1, D.aug19, 1299);
-const trackerReq = reqArr(D.jun22, 107, D.aug19, 2486);
-const trackerDot = dayOff.map((d,i) => i === todayIdx ? 107 : null);
+const trackerReq = reqArr(D.jul1, 493, D.aug19, 2486);
+const trackerDot = dayOff.map((d,i) => i === todayIdx ? 493 : null);
 const tLot2Idx   = lot2Idx(D.aug1);
 
 // PURLINS
 const purlinBL  = blArr (D.mar27, D.jul14, 176442);
 const purlinCur = curArr(D.may28, D.jul31, 84404, D.aug1, D.sep18, 92038);
-const purlinReq = reqArr(D.jun22, 0, D.sep18, 176442);
+const purlinReq = reqArr(D.jul1, 15118, D.sep18, 176442);
 const puLot2Idx = lot2Idx(D.aug1);
 
 // PANELS
 const panelBL  = blArr (D.may1, D.aug18, 171470);
 const panelCur = curArr(D.jun24, D.aug19, 82030, D.aug19, D.oct9, 89440);
-const panelReq = reqArr(D.jun22, 0, D.oct9, 171470);
+const panelReq = reqArr(D.jul1, 0, D.oct9, 171470);
 const paLot2Idx = lot2Idx(D.aug19);
 
 // ─── CHART FACTORY ────────────────────────────────────────────
@@ -653,7 +733,7 @@ function makeChart(canvasId, blData, curData, reqData, dotData, lot2StartIdx, yL
 
   if (dotData) {
     datasets.push({
-      label: 'Actual (Jun 22)',
+      label: 'Actual (Jul 1)',
       data: dotData,
       borderColor: '#168a5b',
       backgroundColor: '#168a5b',
@@ -856,8 +936,11 @@ const purlinDelivPts = [
   [dayOf(7,9),117029],[dayOf(7,10),122289],[dayOf(7,14),138363],
   [dayOf(7,15),162474],[dayOf(7,16),186585],
 ];
-// No usable purlins received yet (first batch non-conforming — wrong module dimension)
-const purlinActualPts = [];
+// Usable purlin receipts (2nd batch) from Jul 1 Delivery/Mechanical workbook ('50%' sheet)
+const purlinActualPts = [
+  [dayOf(6,17),11520],[dayOf(6,23),53443],[dayOf(6,25),61399],
+  [dayOf(6,26),77605],[dayOf(7,1),77605],
+];
 const purlinDelivPlan = deliveryArr(purlinDelivPts);
 const purlinDelivAct  = deliveryArr(purlinActualPts);
 const purlinBLdel     = blArr(dayOf(4,20), dayOf(6,21), 206479); // BL: original GC commitment Apr 20 → Jun 21
@@ -877,12 +960,12 @@ const tubeDelivPts = [
   [dayOf(7,8),25712],[dayOf(7,9),26640],[dayOf(7,10),27600],[dayOf(7,14),28496],
   [dayOf(7,17),29056],
 ];
-// Actual received (through May 29)
+// Actual received (through Jul 1) — Lot 1 zone 14,300 + Lot 2 zone 3,584 = 17,884
 const tubeActualPts = [
   [dayOf(4,21),1184],[dayOf(4,22),1856],[dayOf(4,23),2736],[dayOf(4,24),4928],
   [dayOf(4,28),6016],[dayOf(4,29),6304],[dayOf(4,30),7264],[dayOf(5,14),7616],
   [dayOf(5,20),8576],[dayOf(5,21),9136],[dayOf(5,22),10000],[dayOf(5,27),10352],
-  [dayOf(5,28),11264],[dayOf(5,29),13424],
+  [dayOf(5,28),11264],[dayOf(5,29),14300],[dayOf(6,16),14300],[dayOf(7,1),17884],
 ];
 const tubeDelivPlan = deliveryArr(tubeDelivPts);
 const tubeDelivAct  = deliveryArr(tubeActualPts);
@@ -929,7 +1012,7 @@ const lot1DelivPts = [
   [dayOf(5,1), 11535],  [dayOf(5,5), 12357],  [dayOf(5,6), 13089],
   [dayOf(5,7), 13698],  [dayOf(5,8), 14846],  [dayOf(5,19),15092],
   [dayOf(5,20),15253],  [dayOf(5,21),15415],  [dayOf(5,28),15751],
-  [dayOf(6,23),17727],
+  [dayOf(6,23),17069],  [dayOf(7,1),19432],
 ];
 
 // Lot 2 planned cumulative delivery by date (offset from Lot1 total = 15,751)
