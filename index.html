@@ -121,8 +121,8 @@
         <div class="chart-canvas-wrap"><canvas id="chartPiling"></canvas></div>
         <div class="stats-bar">
           <div class="stat"><div class="stat-label">BL Rate (avg)</div><div class="stat-value green">407/WD</div><div class="stat-sub">77 WD planned</div></div>
-          <div class="stat"><div class="stat-label">Actual Rate (last 2 wks)</div><div class="stat-value red">~122/WD</div><div class="stat-sub">vs ~288/WD Lot 1 avg ⚠</div></div>
-          <div class="stat"><div class="stat-label">Lot 2 Required</div><div class="stat-value red">~621/WD</div><div class="stat-sub">5.1× current rate — buffer 2,364 piles</div></div>
+          <div class="stat"><div class="stat-label">Actual Rate (last 2 wks)</div><div class="stat-value red">~285/WD</div><div class="stat-sub">Jul 7: 396 — vs 736/WD required ⚠</div></div>
+          <div class="stat"><div class="stat-label">Required to Jul 28</div><div class="stat-value red">~736/WD</div><div class="stat-sub">2.6× current rate — buffer 7,412 piles</div></div>
           <div class="stat"><div class="stat-label">Installed Jul 7</div><div class="stat-value amber">18,097</div><div class="stat-sub">57.7% of 31,352 · 25,509 delivered</div></div>
           <div class="stat"><div class="stat-label">Finish Forecast</div><div class="stat-value red">Jul 28</div><div class="stat-sub">BL: Jun 8 (−50 CD) — at risk at current rate</div></div>
         </div>
@@ -130,7 +130,7 @@
           <span class="legend-item"><span class="l-dashed" style="color:#2769a8;width:28px"></span>Contract Baseline (ends Jun 8)</span>
           <span class="legend-item"><span class="l-line" style="background:linear-gradient(to right,#2769a8 50%,#d95f02 50%)"></span>Current Plan — Lot 1 (blue) → Lot 2 (purple) — ends Jul 28</span>
           <span class="legend-item"><span class="l-dashed" style="color:#b53030;width:28px"></span>Required Rate (linear)</span>
-          <span class="legend-item" style="color:#168a5b">▲ Actual Jul 7 (18,097)</span>
+          <span class="legend-item" style="color:#168a5b"><span class="l-line" style="background:#168a5b;width:28px"></span>Actual installed — ▲ 18,097 (Jul 7)</span>
         </div>
       </div>
 
@@ -445,7 +445,7 @@
       </div>
       <div class="highlight-box">
         <strong>Week logic — production criteria:</strong><br><br>
-        <u><strong>Piling is the week's #1 alarm</strong></u>: actual output collapsed to ~122/WD (Jun 17–30) while holding Jul 28 requires 621/WD. Material is on site (2,364-pile buffer) — the constraint is rig deployment, not delivery. Remobilize/add rigs to 8 active machines and verify every rig against the 80/day criterion daily.<br><br>
+        <u><strong>Piling is the week's #1 alarm</strong></u>: actual output is ~285/WD (Jun 23–Jul 7; Jul 7: United 380 with 7 rigs, Latnovva an unacceptable 16 with one machine) while holding Jul 28 requires ~736/WD. Material is on site (7,412-pile buffer) — the constraint is rig deployment and Latnovva manning, not delivery. Add/strengthen rigs and verify every rig against the 80/day criterion daily.<br><br>
         <u><strong>Purlin receipts are no longer the critical-path gate</strong></u>: 93,679 usable units (50.2%) are on site — enough to install purlins along with the trackers. Purlin completion now tracks tracker completion, best estimate Aug 30. Remaining loads through Jul 16 are record only.<br><br>
         <u><strong>Module ramp is critically slow</strong></u>: only 157 modules on Jul 7 (937 cumulative). With 93.7K purlins on site and 528 done tracker rows (235 QA-released, 293 pending Quality), the crew must reach full-field rate to hit the Sep 6 module-complete gate (one week after Aug 30 tracker completion) — and QA must clear the 293-row release backlog.<br><br>
         Tracker pre-assembly (48/WD) and row completion follow purlin availability zone-by-zone: close Area A, then C (piling 95% done), then E. Keep receiving inside Manuel's cap (16 trucks/day) and turn QA pile acceptance same-week so piling fronts never wait on QC.
@@ -473,13 +473,13 @@
             <tr style="border-bottom:1px solid var(--line)">
               <td style="padding:7px 12px;font-weight:600">Mechanical Completion</td>
               <td style="padding:7px 12px;text-align:center">Sep 25, 2026</td>
-              <td style="padding:7px 12px;text-align:center;color:var(--red);font-weight:700">Oct 10–15 provisional</td>
+              <td style="padding:7px 12px;text-align:center;color:var(--amber);font-weight:700">Sep 20–25, 2026</td>
               <td style="padding:7px 12px;text-align:center"><span style="background:var(--red);color:#fff;padding:2px 7px;border-radius:3px;font-size:9px;font-weight:700">CRITICAL</span></td>
             </tr>
             <tr style="border-bottom:1px solid var(--line)">
               <td style="padding:7px 12px;font-weight:600">Provisional Interconnection (PIS)</td>
               <td style="padding:7px 12px;text-align:center">Oct 16, 2026</td>
-              <td style="padding:7px 12px;text-align:center;color:var(--red);font-weight:700">Oct 20–25, 2026</td>
+              <td style="padding:7px 12px;text-align:center;color:var(--amber);font-weight:700">Oct 12–16, 2026</td>
               <td style="padding:7px 12px;text-align:center"><span style="background:var(--red);color:#fff;padding:2px 7px;border-radius:3px;font-size:9px;font-weight:700">CRITICAL</span></td>
             </tr>
             <tr style="border-bottom:1px solid var(--line)">
@@ -512,7 +512,7 @@
             <tr style="border-bottom:1px solid var(--line)">
               <td style="padding:7px 12px;font-weight:600">All piles installed &amp; QC accepted</td>
               <td style="padding:7px 12px;text-align:center;color:var(--red);font-weight:700">Jul 27–28, 2026</td>
-              <td style="padding:7px 12px;text-align:right">621/day · 8 machines × 80 — actual last 2 wks ~122/day ⚠</td>
+              <td style="padding:7px 12px;text-align:right">736/day required — actual last 2 wks ~285/day ⚠</td>
             </tr>
             <tr style="border-bottom:1px solid var(--line)">
               <td style="padding:7px 12px;font-weight:600">Tracker structure incl. purlins complete</td>
@@ -532,7 +532,7 @@
             <tr>
               <td style="padding:7px 12px;font-weight:600">COD — Commercial Operation</td>
               <td style="padding:7px 12px;text-align:center;color:var(--amber);font-weight:700">Nov 9, 2026</td>
-              <td style="padding:7px 12px;text-align:right;color:var(--muted)">Zero float — optimistic scenario only</td>
+              <td style="padding:7px 12px;text-align:right;color:var(--muted)">Limited float restored — pile gate must hold</td>
             </tr>
           </tbody>
         </table>
@@ -540,9 +540,9 @@
 
     </div>
     <p style="font-size:10px;color:var(--muted);margin-top:8px;padding:0 2px">
-      <strong style="color:var(--red)">Management requirement:</strong> COD Nov 9 is feasible only in the optimistic scenario — zero float remains.
+      <strong style="color:var(--red)">Management requirement:</strong> the re-cascaded dates (trackers Aug 30, modules Sep 6, LV/DC Sep 18) put MC back on the Sep 25 target and restore limited float to COD Nov 9 — but only if the Jul 28 pile gate holds.
       Track all recovery gates daily by block. A single miss in piles, purlins, or modules cascades directly to COD.
-      Pile installation has fallen to ~122/WD over the last two weeks against a ~621/WD requirement to hold Jul 28 — the highest-priority production alarm on the project.
+      Pile installation is running ~285/WD over the last two weeks against a ~736/WD requirement to hold Jul 28 — the highest-priority production alarm on the project.
       Latest delivery control: 25,509 piles delivered versus 18,097 installed through Jul 7 — a 7,412-pile buffer (≈13.2 days at the 560/day capacity), so material is not the piling constraint. Jul 7 field output was 396 piles: United 380 with 7 rigs; Latnovva an unacceptable 16 with one machine.
       Purlins: 93,679 usable units received (50.2%) — no longer a restriction; purlins install with the trackers (completion est. Aug 30). Trackers: 528 done (235 QA-released, 293 pending Quality approval; Jul 7: 22 units). Modules: 937 field-reported (Jul 7: only 157); required finish Sep 6 — one week after trackers.
       Source: Const. Management Delivery/Mechanical workbook Jul 6 &amp; field reports Jul 7, 2026.
@@ -654,7 +654,7 @@ const paLot2Idx = lot2Idx(D.aug19);
 Chart.defaults.font.family = "'Inter','Segoe UI',system-ui,sans-serif";
 Chart.defaults.font.size   = 10;
 
-function makeChart(canvasId, blData, curData, reqData, dotData, lot2StartIdx, yLabel, yMax, showGap) {
+function makeChart(canvasId, blData, curData, reqData, dotData, lot2StartIdx, yLabel, yMax, showGap, actData) {
   const ctx = document.getElementById(canvasId).getContext('2d');
 
   // Segment color: blue (Lot 1) → purple (Lot 2) at the lot2 boundary
@@ -730,6 +730,20 @@ function makeChart(canvasId, blData, curData, reqData, dotData, lot2StartIdx, yL
       order: 0,
     },
   ];
+
+  if (actData) {
+    datasets.push({
+      label: 'Actual production (cumulative)',
+      data: actData,
+      borderColor: '#168a5b',
+      backgroundColor: '#168a5b',
+      borderWidth: 3,
+      pointRadius: 0,
+      tension: 0.2,
+      spanGaps: false,
+      order: -2,
+    });
+  }
 
   if (dotData) {
     datasets.push({
@@ -974,10 +988,34 @@ const tubeGapS      = dayOff.findIndex(d => d >= dayOf(5,29));
 const tubeGapE      = dayOff.findIndex(d => d >= dayOf(6,16));
 const tubeLot2Idx   = tubeGapE;
 
-makeChart('chartPiling',  pilingBL,  pilingCur,  pilingReq,  pilingDot,  pLot2Idx,  'Cumulative Piles',  35000,  true);
-makeChart('chartTracker', trackerBL, trackerCur, trackerReq, trackerDot, tLot2Idx,  'Cumulative Rows',   2800,   false);
-makeChart('chartPurlins', purlinBL,  purlinCur,  purlinReq,  null,       puLot2Idx, 'Cumulative Units',  190000, false);
-makeChart('chartPanels',  panelBL,   panelCur,   panelReq,   null,       paLot2Idx, 'Cumulative Panels', 185000, false);
+// ── ACTUAL cumulative production (green line) — workbook + field-report anchors ──
+const pileActualPts = [
+  [dayOf(4,15),0],[dayOf(6,16),14586],[dayOf(6,22),15707],
+  [dayOf(7,1),17068],[dayOf(7,6),17701],[dayOf(7,7),18097],
+];
+const pileActual = deliveryArr(pileActualPts);
+// Trackers: green line = QA-released rows; triangle = total done (528 incl. 293 pending QA)
+const trkRelActualPts = [
+  [dayOf(5,28),0],[dayOf(6,26),170],[dayOf(7,1),213],[dayOf(7,7),235],
+];
+const trkRelActual = deliveryArr(trkRelActualPts);
+// Purlins installed (est. from done rows × ~71 purlins/row)
+const purlinInstActualPts = [
+  [dayOf(6,23),0],[dayOf(7,1),15118],[dayOf(7,7),37470],
+];
+const purlinInstActual = deliveryArr(purlinInstActualPts);
+const purlinDot = dayOff.map((d,i) => i === todayIdx ? 37470 : null);
+// Modules installed (field-reported cumulative)
+const panelActualPts = [
+  [dayOf(7,3),234],[dayOf(7,6),780],[dayOf(7,7),937],
+];
+const panelActual = deliveryArr(panelActualPts);
+const panelDot = dayOff.map((d,i) => i === todayIdx ? 937 : null);
+
+makeChart('chartPiling',  pilingBL,  pilingCur,  pilingReq,  pilingDot,  pLot2Idx,  'Cumulative Piles',  35000,  true,  pileActual);
+makeChart('chartTracker', trackerBL, trackerCur, trackerReq, trackerDot, tLot2Idx,  'Cumulative Rows',   2800,   false, trkRelActual);
+makeChart('chartPurlins', purlinBL,  purlinCur,  purlinReq,  purlinDot,  puLot2Idx, 'Cumulative Units',  190000, false, purlinInstActual);
+makeChart('chartPanels',  panelBL,   panelCur,   panelReq,   panelDot,   paLot2Idx, 'Cumulative Panels', 185000, false, panelActual);
 
 // ─── DELIVERY S-CURVE ─────────────────────────────────────────
 // Real cumulative data from GameChange_Delivery_Schedule CSV
