@@ -152,7 +152,7 @@
           <div class="stat"><div class="stat-label">BL Rate (avg)</div><div class="stat-value green">31.9/WD</div><div class="stat-sub">78 WD planned</div></div>
           <div class="stat"><div class="stat-label">Zone 1 Required</div><div class="stat-value amber">~47/WD</div><div class="stat-sub">23 WD — after purlins arrive</div></div>
           <div class="stat"><div class="stat-label">Zone 2 Required</div><div class="stat-value red">100/WD</div><div class="stat-sub">~13 WD — 3.14× BL ⚠</div></div>
-          <div class="stat"><div class="stat-label">Installed Jul 7</div><div class="stat-value amber">493</div><div class="stat-sub">19.8% pre-assembled · 235 purlin-complete (9.5%) · Jul 7: 22 units</div></div>
+          <div class="stat"><div class="stat-label">Done Jul 7</div><div class="stat-value amber">528</div><div class="stat-sub">21.2% done · 235 QA-released + 293 pending Quality · Jul 7: 22 units</div></div>
           <div class="stat"><div class="stat-label">Finish Forecast</div><div class="stat-value red">Aug 30</div><div class="stat-sub">BL: Jul 14 (−47 CD) · incl. purlins</div></div>
         </div>
         <div class="legend-bar">
@@ -180,7 +180,7 @@
           <div class="stat"><div class="stat-label">BL Rate (avg)</div><div class="stat-value green">2,262/WD</div><div class="stat-sub">78 WD planned</div></div>
           <div class="stat"><div class="stat-label">Zone 1 Required</div><div class="stat-value amber">~1,918/WD</div><div class="stat-sub">44 WD — 0.85× BL</div></div>
           <div class="stat"><div class="stat-label">Zone 2 Required</div><div class="stat-value amber">2,630/WD</div><div class="stat-sub">~35 WD — 1.16× BL</div></div>
-          <div class="stat"><div class="stat-label">Installed Jul 7</div><div class="stat-value amber">~16.7K est</div><div class="stat-sub">235 rows purlin-complete · 93,679 on site</div></div>
+          <div class="stat"><div class="stat-label">Installed Jul 7</div><div class="stat-value amber">~37.5K est</div><div class="stat-sub">528 rows done (235 QA-released) · 93,679 on site</div></div>
           <div class="stat"><div class="stat-label">Finish Forecast</div><div class="stat-value red">Aug 30</div><div class="stat-sub">BL: Jul 14 (−47 CD) · with trackers</div></div>
         </div>
         <div class="legend-bar">
@@ -447,7 +447,7 @@
         <strong>Week logic — production criteria:</strong><br><br>
         <u><strong>Piling is the week's #1 alarm</strong></u>: actual output collapsed to ~122/WD (Jun 17–30) while holding Jul 28 requires 621/WD. Material is on site (2,364-pile buffer) — the constraint is rig deployment, not delivery. Remobilize/add rigs to 8 active machines and verify every rig against the 80/day criterion daily.<br><br>
         <u><strong>Purlin receipts are no longer the critical-path gate</strong></u>: 93,679 usable units (50.2%) are on site — enough to install purlins along with the trackers. Purlin completion now tracks tracker completion, best estimate Aug 30. Remaining loads through Jul 16 are record only.<br><br>
-        <u><strong>Module ramp is critically slow</strong></u>: only 157 modules on Jul 7 (937 cumulative). With 93.7K purlins on site and 235 purlin-complete rows, the crew must reach full-field rate to hit the Sep 6 module-complete gate (one week after Aug 30 tracker completion).<br><br>
+        <u><strong>Module ramp is critically slow</strong></u>: only 157 modules on Jul 7 (937 cumulative). With 93.7K purlins on site and 528 done tracker rows (235 QA-released, 293 pending Quality), the crew must reach full-field rate to hit the Sep 6 module-complete gate (one week after Aug 30 tracker completion) — and QA must clear the 293-row release backlog.<br><br>
         Tracker pre-assembly (48/WD) and row completion follow purlin availability zone-by-zone: close Area A, then C (piling 95% done), then E. Keep receiving inside Manuel's cap (16 trucks/day) and turn QA pile acceptance same-week so piling fronts never wait on QC.
       </div>
     </div>
@@ -544,7 +544,7 @@
       Track all recovery gates daily by block. A single miss in piles, purlins, or modules cascades directly to COD.
       Pile installation has fallen to ~122/WD over the last two weeks against a ~621/WD requirement to hold Jul 28 — the highest-priority production alarm on the project.
       Latest delivery control: 25,509 piles delivered versus 18,097 installed through Jul 7 — a 7,412-pile buffer (≈13.2 days at the 560/day capacity), so material is not the piling constraint. Jul 7 field output was 396 piles: United 380 with 7 rigs; Latnovva an unacceptable 16 with one machine.
-      Purlins: 93,679 usable units received (50.2%) — no longer a restriction; purlins install with the trackers (completion est. Aug 30). Trackers: 493 pre-assembled, 235 purlin-complete (Jul 7: 22 units). Modules: 937 field-reported (Jul 7: only 157); required finish Sep 6 — one week after trackers.
+      Purlins: 93,679 usable units received (50.2%) — no longer a restriction; purlins install with the trackers (completion est. Aug 30). Trackers: 528 done (235 QA-released, 293 pending Quality approval; Jul 7: 22 units). Modules: 937 field-reported (Jul 7: only 157); required finish Sep 6 — one week after trackers.
       Source: Const. Management Delivery/Mechanical workbook Jul 6 &amp; field reports Jul 7, 2026.
     </p>
   </div>
@@ -634,14 +634,14 @@ const pLot2Idx  = lot2Idx(D.jun22);
 // TRACKERS
 const trackerBL  = blArr (D.mar27, D.jul14, 2486);
 const trackerCur = curArr(D.may28, D.jul24, 1187, D.aug1, D.aug30, 1299);
-const trackerReq = reqArr(D.jul7, 493, D.aug30, 2486);
-const trackerDot = dayOff.map((d,i) => i === todayIdx ? 493 : null);
+const trackerReq = reqArr(D.jul7, 528, D.aug30, 2486);
+const trackerDot = dayOff.map((d,i) => i === todayIdx ? 528 : null);
 const tLot2Idx   = lot2Idx(D.aug1);
 
 // PURLINS
 const purlinBL  = blArr (D.mar27, D.jul14, 176442);
 const purlinCur = curArr(D.may28, D.jul31, 84404, D.aug1, D.aug30, 92038);
-const purlinReq = reqArr(D.jul7, 16680, D.aug30, 176442);
+const purlinReq = reqArr(D.jul7, 37470, D.aug30, 176442);
 const puLot2Idx = lot2Idx(D.aug1);
 
 // PANELS
